@@ -17,6 +17,11 @@ find_package(hep_concurrency REQUIRED PUBLIC)
 cet_make_library(LIBRARY_NAME container_algorithms INTERFACE
   SOURCE container_algorithms.h)
 
+cet_make_library(LIBRARY_NAME pow INTERFACE
+  SOURCE pow.h
+  LIBRARIES INTERFACE cetlib_except::cetlib_except
+)
+
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shlib_utils.cc.in
   ${CMAKE_CURRENT_BINARY_DIR}/shlib_utils.cc @ONLY
 )
