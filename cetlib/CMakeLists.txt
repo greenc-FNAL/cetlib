@@ -6,11 +6,11 @@
 
 include(CetMake)
 
-find_package(Boost PRIVATE COMPONENTS regex REQUIRED)
-find_package(Boost COMPONENTS program_options filesystem REQUIRED PUBLIC)
-find_package(cetlib_except REQUIRED PUBLIC)
-find_package(SQLite3 REQUIRED PUBLIC)
-find_package(hep_concurrency REQUIRED PUBLIC)
+find_package(Boost COMPONENTS regex REQUIRED)
+find_package(Boost COMPONENTS program_options filesystem REQUIRED EXPORT)
+find_package(cetlib_except REQUIRED EXPORT)
+find_package(SQLite3 REQUIRED EXPORT)
+find_package(hep_concurrency REQUIRED EXPORT)
 
 ####################################
 # Libraries.
@@ -71,7 +71,7 @@ cet_make_library(HEADERS_TARGET
 # find openSSL
 # when building on macOS, use CommonCrypto
 if(NOT APPLE)
-  find_package(OpenSSL REQUIRED PUBLIC)
+  find_package(OpenSSL REQUIRED EXPORT)
   target_link_libraries(cetlib PUBLIC OpenSSL::Crypto)
 endif()
 
