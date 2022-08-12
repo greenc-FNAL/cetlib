@@ -14,7 +14,6 @@ cet_register_export_set(SET_NAME Testing NAMESPACE cetlib_test SET_DEFAULT)
 add_subdirectory(sqlite)
 
 cet_test(bit_test)
-cet_test(exempt_ptr_test)
 cet_test(value_ptr_test_2)
 cet_test(value_ptr_test_3)
 cet_test(value_ptr_test_4)
@@ -25,6 +24,7 @@ foreach (test IN ITEMS
     canonical_string_test
     column_width_test
     container_algs_test
+    exempt_ptr_test
     includer_test
     is_absolute_filepath_t
     lpad_test
