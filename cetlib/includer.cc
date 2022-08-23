@@ -14,6 +14,7 @@
 #include "cetlib_except/coded_exception.h"
 
 #include <algorithm>
+#include <fstream>
 #include <iostream>
 
 using cet::includer;

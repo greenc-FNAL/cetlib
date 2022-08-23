@@ -3,10 +3,10 @@ cet_enable_asserts()
 
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 
-find_package(Catch2 PRIVATE REQUIRED)
-find_package(SQLite3 PRIVATE REQUIRED)
-find_package(Threads PRIVATE REQUIRED)
-find_package(hep_concurrency PRIVATE REQUIRED)
+find_package(Catch2 REQUIRED)
+find_package(SQLite3 REQUIRED)
+find_package(Threads REQUIRED)
+find_package(hep_concurrency REQUIRED)
 
 # Put everything in a different export set.
 cet_register_export_set(SET_NAME Testing NAMESPACE cetlib_test SET_DEFAULT)
@@ -14,7 +14,6 @@ cet_register_export_set(SET_NAME Testing NAMESPACE cetlib_test SET_DEFAULT)
 add_subdirectory(sqlite)
 
 cet_test(bit_test)
-cet_test(exempt_ptr_test)
 cet_test(value_ptr_test_2)
 cet_test(value_ptr_test_3)
 cet_test(value_ptr_test_4)
@@ -25,6 +24,7 @@ foreach (test IN ITEMS
     canonical_string_test
     column_width_test
     container_algs_test
+    exempt_ptr_test
     includer_test
     is_absolute_filepath_t
     lpad_test

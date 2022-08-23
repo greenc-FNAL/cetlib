@@ -10,6 +10,7 @@
 #include <string>
 
 #include "cetlib/value_ptr.h"
+#include "cetlib/compiler_macros.h"
 
 namespace cet {
   std::ostream&
@@ -64,7 +65,14 @@ BOOST_AUTO_TEST_CASE(basic_test)
 
   p.reset(new int(0));
   BOOST_TEST(*p == 0);
+#pragma GCC diagnostic push
+#if GCC_IS_AT_LEAST(12,1,0)
+// GCC >=12.1 warns on use of a pointer after its memory has been freed: in
+// this case it's what we want (for p_addr).
+#pragma GCC diagnostic ignored "-Wuse-after-free"
+#endif
   BOOST_TEST(p_addr != p.get());
+#pragma GCC diagnostic pop
 }
 
 BOOST_AUTO_TEST_CASE(compile_failure_test)

@@ -1,59 +1,87 @@
+#define BOOST_TEST_MODULE (exempt_ptr test)
+
+#include "boost/test/unit_test.hpp"
 #include "cetlib/exempt_ptr.h"
 #include <cstdlib>
+
+namespace cet {
+  template <typename T>
+  std::ostream&
+  boost_test_print_type(std::ostream& os, exempt_ptr<T> p)
+  {
+    return os << p.get();
+  }
+}
 
 using cet::exempt_ptr;
 using cet::make_exempt_ptr;
 
-void
-ensure(int which, bool claim)
+BOOST_AUTO_TEST_SUITE(exempt_ptr_test)
+
+BOOST_AUTO_TEST_CASE(null_ptr_test)
 {
-  if (not claim)
-    std::exit(which);
+  exempt_ptr<int> p;
+  BOOST_TEST(!p);
+  BOOST_TEST(p == nullptr);
+  BOOST_TEST(nullptr == p);
+  BOOST_TEST((p == 0));
+  BOOST_TEST((0 == p));
 }
 
-int
-main()
+BOOST_AUTO_TEST_CASE(constructibility)
+{ // non-const => const
+  static_assert(std::is_constructible_v<exempt_ptr<int const>, int*>);
+  // const => non-const (not constructible)
+  static_assert(not std::is_constructible_v<exempt_ptr<int>, int const*>);
+  // cet::exempt_ptr<T> ==> cet::exempt_ptr<T const>
+  static_assert(
+    std::is_constructible_v<exempt_ptr<int const>, exempt_ptr<int>>);
+}
+
+BOOST_AUTO_TEST_CASE(deduction_guide)
 {
-  {
-    exempt_ptr<int> p;
-    ensure(11, !p);
-    ensure(12, p == nullptr);
-    ensure(13, nullptr == p);
-    ensure(14, p == 0);
-    ensure(15, 0 == p);
-  }
+  int i{42};
+  exempt_ptr p{&i};
+  static_assert(std::is_same_v<exempt_ptr<int>, decltype(p)>);
+  int const ci{42};
+  exempt_ptr cp{&ci};
+  static_assert(std::is_same_v<exempt_ptr<int const>, decltype(cp)>);
+}
 
-  { // non-const => const
-    int* p = new int(0);
-    exempt_ptr<int const> ep(p);
-  }
+BOOST_AUTO_TEST_CASE(comparisons)
+{
+  int i{42};
+  exempt_ptr p{&i};
+  exempt_ptr<int const> cp{&i};
+  BOOST_TEST(p == cp);
+  BOOST_TEST(cp == p);
+}
 
-  {
-    exempt_ptr<double const> p = make_exempt_ptr(new double(42.0));
-    ensure(21, p != nullptr);
-    ensure(22, nullptr != p);
-    ensure(23, *p == 42.0);
-  }
+BOOST_AUTO_TEST_CASE(nondeletable_ptr)
+{
+  double const d{42.0};
+  auto p = make_exempt_ptr(&d);
+  static_assert(std::is_same_v<exempt_ptr<double const>, decltype(p)>);
+  BOOST_TEST(p != nullptr);
+  BOOST_TEST(nullptr != p);
+  BOOST_TEST(*p == 42.0);
+}
 
-#if 0
-  { // const => non-const (ought fail to compile)
-    int const * p = new int(0);
-    exempt_ptr<int> ep(p);
-  }
-#endif // 0
+BOOST_AUTO_TEST_CASE(ptr_with_value)
+{
+  int i{16};
+  exempt_ptr<int> p(&i);
+  BOOST_TEST(p != nullptr);
+  BOOST_TEST(nullptr != p);
+  BOOST_TEST(*p == 16);
 
-  {
-    exempt_ptr<int> p(new int(16));
-    ensure(31, p != nullptr);
-    ensure(32, nullptr != p);
-    ensure(33, *p == 16);
+  exempt_ptr<int> q(p);
+  BOOST_TEST(p == q);
+  BOOST_TEST(*p == *q);
 
-    exempt_ptr<int> q(p);
-    ensure(34, p == q);
-    ensure(35, *p == *q);
+  int j{};
+  p.reset(&j);
+  BOOST_TEST(*p == 0);
+}
 
-    p.reset(new int(0));
-    return *p;
-  }
-
-} // main()
+BOOST_AUTO_TEST_SUITE_END()
