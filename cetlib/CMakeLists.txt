@@ -111,4 +111,6 @@ install_source(SUBDIRS detail)
 add_subdirectory(sqlite)
 
 # Tests
-add_subdirectory(test)
+if (BUILD_TESTING)
+  add_subdirectory(test)
+endif()
