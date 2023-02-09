@@ -3,7 +3,7 @@
 #define _POSIX_C_SOURCE 200112L
 #endif
 
-#include "catch2/catch.hpp"
+#include "catch2/catch_test_macros.hpp"
 
 #include "cetlib/getenv.h"
 #include "cetlib_except/exception.h"
@@ -44,7 +44,7 @@ TEST_CASE("getenv_unset")
       cet::getenv(VAR),
       cet::exception,
       cet::exception_category_matcher("getenv") &&
-        cet::exception_message_matcher(Catch::Matchers::Contains(
+        cet::exception_message_matcher(Catch::Matchers::ContainsSubstring(
           "Can't find an environment variable named \""s + VAR + "\"\n")));
   }
 
