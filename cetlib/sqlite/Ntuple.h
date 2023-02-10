@@ -218,7 +218,7 @@ cet::sqlite::Ntuple<Args...>::Ntuple(Connection& connection,
 {}
 
 template <typename... Args>
-cet::sqlite::Ntuple<Args...>::~Ntuple<Args...>() noexcept
+cet::sqlite::Ntuple<Args...>::~Ntuple() noexcept
 {
   if (flush_no_throw() != SQLITE_OK) {
     std::cerr << "SQLite step failure while flushing.\n";

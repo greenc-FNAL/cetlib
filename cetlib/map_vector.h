@@ -98,10 +98,10 @@ public:
   using const_reverse_iterator = typename impl_type::const_reverse_iterator;
 
   using allocator_type = typename impl_type::allocator_type;
-  using pointer = typename allocator_type::pointer;
-  using const_pointer = typename allocator_type::const_pointer;
-  using reference = typename allocator_type::reference;
-  using const_reference = typename allocator_type::const_reference;
+  using pointer = typename std::allocator_traits<allocator_type>::pointer;
+  using const_pointer = typename std::allocator_traits<allocator_type>::const_pointer;
+  using reference = value_type&;
+  using const_reference = const value_type&;
 
   // c'tors:
   map_vector() = default;
