@@ -148,7 +148,8 @@ test_file_create(ConnectionFactory& cf)
 }
 
 int
-main() try {
+main()
+try {
   const char* fname{"no_such_file.db"};
   // If there is a database in the directory, delete it.
   remove(fname);

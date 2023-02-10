@@ -18,7 +18,8 @@ cet::filepath_maker identity_filepath;
 // ----------------------------------------------------------------------
 
 int
-do_including(std::string const& from, std::ostream& to) try {
+do_including(std::string const& from, std::ostream& to)
+try {
   cet::includer inc(from, identity_filepath);
 
   cet::includer::const_iterator it = inc.begin();

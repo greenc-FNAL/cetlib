@@ -117,7 +117,8 @@ cet::lookup_policy_selector::select(std::string const& policy,
   }
 
   if (policy == nonabsolute()) {
-    return std::make_unique<filepath_lookup_nonabsolute>(std::move(env_or_paths));
+    return std::make_unique<filepath_lookup_nonabsolute>(
+      std::move(env_or_paths));
   }
 
   if (policy == after1()) {

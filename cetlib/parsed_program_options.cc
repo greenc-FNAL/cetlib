@@ -4,11 +4,11 @@
 namespace bpo = boost::program_options;
 
 bpo::variables_map
-cet::parsed_program_options(
-  int argc,
-  char** argv,
-  bpo::options_description const& desc,
-  bpo::positional_options_description const& pos) try {
+cet::parsed_program_options(int argc,
+                            char** argv,
+                            bpo::options_description const& desc,
+                            bpo::positional_options_description const& pos)
+try {
   bpo::variables_map result;
   bpo::store(bpo::command_line_parser(argc, argv)
                .options(desc)

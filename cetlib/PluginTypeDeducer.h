@@ -33,7 +33,10 @@ namespace cet {
 
 #define DEFINE_BASIC_PLUGINTYPE_FUNC(base)                                     \
   EXTERN_C_FUNC_DECLARE_START                                                  \
-  std::string pluginType() { return cet::PluginTypeDeducer<base>::value; }     \
+  std::string pluginType()                                                     \
+  {                                                                            \
+    return cet::PluginTypeDeducer<base>::value;                                \
+  }                                                                            \
   EXTERN_C_FUNC_DECLARE_END
 
 namespace cet {

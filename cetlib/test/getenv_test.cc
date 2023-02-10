@@ -21,16 +21,28 @@ TEST_CASE("getenv_value")
 {
   std::string const val{"TEST"};
   setenv(VAR, val.c_str(), 1);
-  SECTION("Throw") { REQUIRE(val == cet::getenv(VAR)); }
-  SECTION("NoThrow") { REQUIRE(val == cet::getenv(VAR, std::nothrow)); }
+  SECTION("Throw")
+  {
+    REQUIRE(val == cet::getenv(VAR));
+  }
+  SECTION("NoThrow")
+  {
+    REQUIRE(val == cet::getenv(VAR, std::nothrow));
+  }
 }
 
 TEST_CASE("getenv_empty")
 {
   std::string const val; // Empty
   setenv(VAR, val.c_str(), 1);
-  SECTION("Throw") { REQUIRE(val == cet::getenv(VAR)); }
-  SECTION("NoThrow") { REQUIRE(val == cet::getenv(VAR, std::nothrow)); }
+  SECTION("Throw")
+  {
+    REQUIRE(val == cet::getenv(VAR));
+  }
+  SECTION("NoThrow")
+  {
+    REQUIRE(val == cet::getenv(VAR, std::nothrow));
+  }
 }
 
 TEST_CASE("getenv_unset")
@@ -48,5 +60,8 @@ TEST_CASE("getenv_unset")
           "Can't find an environment variable named \""s + VAR + "\"\n")));
   }
 
-  SECTION("No Throw") { CHECK(cet::getenv(VAR, std::nothrow).empty()); }
+  SECTION("No Throw")
+  {
+    CHECK(cet::getenv(VAR, std::nothrow).empty());
+  }
 }

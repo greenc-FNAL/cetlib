@@ -56,7 +56,10 @@ namespace fhicl {
    *  Comments:
    *
    */
-  SHA1::SHA1() { Reset(); }
+  SHA1::SHA1()
+  {
+    Reset();
+  }
 
   /*
    *  Reset

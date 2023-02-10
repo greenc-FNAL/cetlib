@@ -55,7 +55,8 @@ cet::is_quoted_string(std::string const& str)
 }
 
 inline bool
-cet::canonical_string(std::string const& s, std::string& result) try {
+cet::canonical_string(std::string const& s, std::string& result)
+try {
   bool success = false;
   if (!s.empty()) {
     result.append(canonical_string(s));

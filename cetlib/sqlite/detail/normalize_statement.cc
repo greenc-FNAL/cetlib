@@ -22,7 +22,8 @@ cet::sqlite::detail::normalize_statement(std::string& to_replace)
   }
 }
 
-std::string cet::sqlite::detail::normalized_statement(
+std::string
+cet::sqlite::detail::normalized_statement(
   std::string to_replace) // Argument is a copy!
 {
   normalize_statement(to_replace);

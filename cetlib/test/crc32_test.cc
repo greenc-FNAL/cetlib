@@ -63,7 +63,10 @@ SCENARIO("We can produce CRC32 checksums accurately")
       auto const digest = crc.digest();
       auto const ref = refMaker.checksum();
 
-      THEN("The checksums compare equal") { CHECK(digest == ref); }
+      THEN("The checksums compare equal")
+      {
+        CHECK(digest == ref);
+      }
     }
   }
 
@@ -77,7 +80,10 @@ SCENARIO("We can produce CRC32 checksums accurately")
       auto const digest = crc.digest();
       auto const ref = refMaker.checksum();
 
-      THEN("The checksums compare equal") { CHECK(digest == ref); }
+      THEN("The checksums compare equal")
+      {
+        CHECK(digest == ref);
+      }
     }
   }
 
@@ -91,7 +97,10 @@ SCENARIO("We can produce CRC32 checksums accurately")
       auto const digest = crc.digest();
       auto const ref = refMaker.checksum();
 
-      THEN("The checksums compare equal") { CHECK(digest == ref); }
+      THEN("The checksums compare equal")
+      {
+        CHECK(digest == ref);
+      }
     }
   }
 
@@ -133,7 +142,10 @@ SCENARIO("We can produce CRC32 checksums accurately")
     {
       crc << "";
 
-      THEN("It should be 0") { CHECK(crc.digest() == 0); }
+      THEN("It should be 0")
+      {
+        CHECK(crc.digest() == 0);
+      }
     }
   }
 }
