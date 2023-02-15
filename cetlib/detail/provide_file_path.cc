@@ -6,5 +6,5 @@ cet::detail::provide_file_path(char const* filename)
 {
   assert(filename);
   boost::filesystem::path const p{filename};
-  return complete(p).native();
+  return absolute(p).native();
 }

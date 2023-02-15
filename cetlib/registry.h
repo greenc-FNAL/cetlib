@@ -93,7 +93,8 @@ cet::registry<K, V>::get(K const& key)
 
 template <class K, class V>
 bool
-cet::registry<K, V>::get(K const& key, V& value) noexcept try {
+cet::registry<K, V>::get(K const& key, V& value) noexcept
+try {
   value = get(key);
   return true;
 }

@@ -73,8 +73,16 @@ namespace cet {
     {
       return &(*m_value);
     }
-    element_type const* operator->() const { return this->get(); }
-    element_type const& operator*() const { return *m_value; }
+    element_type const*
+    operator->() const
+    {
+      return this->get();
+    }
+    element_type const&
+    operator*() const
+    {
+      return *m_value;
+    }
 
     operator element_type const*() const { return this->get(); }
 
@@ -84,8 +92,16 @@ namespace cet {
     {
       return &(*m_value);
     }
-    element_type* operator->() { return this->get(); }
-    element_type& operator*() { return *m_value; }
+    element_type*
+    operator->()
+    {
+      return this->get();
+    }
+    element_type&
+    operator*()
+    {
+      return *m_value;
+    }
 
     operator element_type*() { return this->get(); }
 

@@ -24,7 +24,8 @@ namespace {
 }
 
 int
-main() try {
+main()
+try {
   // Test spaces around parentheses and commas
   {
     std::string const test{"CREATE TABLE TimeEvent (   Run  integer,   SubRun "

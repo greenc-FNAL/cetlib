@@ -17,7 +17,8 @@
 using std::abs;
 
 bool
-cet::canonical_number(std::string const& value, std::string& result) try {
+cet::canonical_number(std::string const& value, std::string& result)
+try {
   std::string::const_iterator it = value.begin();
   std::string::const_iterator const end = value.end();
 

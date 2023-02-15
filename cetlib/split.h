@@ -34,7 +34,8 @@ template <class OutIter>
 void
 cet::split(std::string const& s, char c, OutIter dest)
 {
-  split_if(s, [c](char x) { return x == c; }, dest);
+  split_if(
+    s, [c](char x) { return x == c; }, dest);
 }
 
 // ======================================================================

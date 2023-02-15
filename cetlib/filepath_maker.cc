@@ -30,7 +30,7 @@ filepath_maker::operator()(std::string const& filename)
 
 // ----------------------------------------------------------------------
 
-filepath_lookup::filepath_lookup(std::string paths) : paths{move(paths)} {}
+filepath_lookup::filepath_lookup(std::string paths) : paths{std::move(paths)} {}
 
 std::string
 filepath_lookup::operator()(std::string const& filename)
@@ -41,7 +41,7 @@ filepath_lookup::operator()(std::string const& filename)
 // ----------------------------------------------------------------------
 
 filepath_lookup_nonabsolute::filepath_lookup_nonabsolute(std::string paths)
-  : paths{move(paths)}
+  : paths{std::move(paths)}
 {}
 
 std::string
@@ -54,7 +54,7 @@ filepath_lookup_nonabsolute::operator()(std::string const& filename)
 // ----------------------------------------------------------------------
 
 filepath_lookup_after1::filepath_lookup_after1(std::string paths)
-  : paths{move(paths)}
+  : paths{std::move(paths)}
 {}
 
 std::string
@@ -73,7 +73,7 @@ filepath_lookup_after1::reset()
 
 filepath_first_absolute_or_lookup_with_dot::
   filepath_first_absolute_or_lookup_with_dot(std::string paths)
-  : first_paths{std::string("./:") + paths}, after_paths{move(paths) + ':'}
+  : first_paths{std::string("./:") + paths}, after_paths{std::move(paths) + ':'}
 {
   if (after_paths.empty()) {
     std::cerr << "search path empty (nonexistent environment variable"
@@ -113,15 +113,16 @@ cet::lookup_policy_selector::select(std::string const& policy,
   }
 
   if (policy == all()) {
-    return std::make_unique<filepath_lookup>(move(env_or_paths));
+    return std::make_unique<filepath_lookup>(std::move(env_or_paths));
   }
 
   if (policy == nonabsolute()) {
-    return std::make_unique<filepath_lookup_nonabsolute>(move(env_or_paths));
+    return std::make_unique<filepath_lookup_nonabsolute>(
+      std::move(env_or_paths));
   }
 
   if (policy == after1()) {
-    return std::make_unique<filepath_lookup_after1>(move(env_or_paths));
+    return std::make_unique<filepath_lookup_after1>(std::move(env_or_paths));
   }
 
   if (policy == permissive()) {
@@ -132,7 +133,7 @@ cet::lookup_policy_selector::select(std::string const& policy,
       search_paths = env_or_paths;
     }
     return std::make_unique<filepath_first_absolute_or_lookup_with_dot>(
-      move(search_paths));
+      std::move(search_paths));
   }
 
   throw cet::exception("Configuration")

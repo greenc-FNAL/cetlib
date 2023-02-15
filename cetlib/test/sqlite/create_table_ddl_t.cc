@@ -27,7 +27,8 @@ namespace {
 }
 
 int
-main() try {
+main()
+try {
   // Test simple create_table() so we can use it later
   {
     auto const& test = detail::create_table("employees");

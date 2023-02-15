@@ -39,7 +39,10 @@ namespace cet {
     val.bytes[15] = 0x7e;
   }
 
-  MD5Result::MD5Result() { set_to_default(*this); }
+  MD5Result::MD5Result()
+  {
+    set_to_default(*this);
+  }
 
   std::string
   MD5Result::toString() const
@@ -117,7 +120,10 @@ namespace cet {
   // MD5Digest
   //
 
-  MD5Digest::MD5Digest() : context_() { MD5_Init(&context_); }
+  MD5Digest::MD5Digest() : context_()
+  {
+    MD5_Init(&context_);
+  }
 
   MD5Digest::MD5Digest(std::string const& s) : context_()
   {

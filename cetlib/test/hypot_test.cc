@@ -1,4 +1,5 @@
-#include "catch2/catch.hpp"
+#include "catch2/catch_approx.hpp"
+#include "catch2/catch_test_macros.hpp"
 
 #include <cmath>
 #include <limits>
@@ -10,8 +11,8 @@ using cet::hypot;
 TEST_CASE("Basic test")
 {
   CHECK(hypot(5, 12) == 13);
-  CHECK(hypot(.5, 1.2) == Approx(1.3).epsilon(0.0001));
-  CHECK(hypot(.05L, .12L) == Approx(.13L).epsilon(0.0001L));
+  CHECK(hypot(.5, 1.2) == Catch::Approx(1.3).epsilon(0.0001));
+  CHECK(hypot(.05L, .12L) == Catch::Approx(.13L).epsilon(0.0001L));
 }
 
 TEST_CASE("NaN test")

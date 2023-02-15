@@ -84,7 +84,8 @@ search_path::size() const
   return dirs_.size();
 }
 
-string const& search_path::operator[](size_t const k) const
+string const&
+search_path::operator[](size_t const k) const
 {
   return dirs_.at(k);
 }

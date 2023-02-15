@@ -3,7 +3,7 @@
 #define _POSIX_C_SOURCE 200112L
 #endif
 
-#include "catch2/catch.hpp"
+#include "catch2/catch_test_macros.hpp"
 
 #include "cetlib/getenv.h"
 #include "cetlib_except/exception.h"
@@ -21,16 +21,28 @@ TEST_CASE("getenv_value")
 {
   std::string const val{"TEST"};
   setenv(VAR, val.c_str(), 1);
-  SECTION("Throw") { REQUIRE(val == cet::getenv(VAR)); }
-  SECTION("NoThrow") { REQUIRE(val == cet::getenv(VAR, std::nothrow)); }
+  SECTION("Throw")
+  {
+    REQUIRE(val == cet::getenv(VAR));
+  }
+  SECTION("NoThrow")
+  {
+    REQUIRE(val == cet::getenv(VAR, std::nothrow));
+  }
 }
 
 TEST_CASE("getenv_empty")
 {
   std::string const val; // Empty
   setenv(VAR, val.c_str(), 1);
-  SECTION("Throw") { REQUIRE(val == cet::getenv(VAR)); }
-  SECTION("NoThrow") { REQUIRE(val == cet::getenv(VAR, std::nothrow)); }
+  SECTION("Throw")
+  {
+    REQUIRE(val == cet::getenv(VAR));
+  }
+  SECTION("NoThrow")
+  {
+    REQUIRE(val == cet::getenv(VAR, std::nothrow));
+  }
 }
 
 TEST_CASE("getenv_unset")
@@ -44,9 +56,12 @@ TEST_CASE("getenv_unset")
       cet::getenv(VAR),
       cet::exception,
       cet::exception_category_matcher("getenv") &&
-        cet::exception_message_matcher(Catch::Matchers::Contains(
+        cet::exception_message_matcher(Catch::Matchers::ContainsSubstring(
           "Can't find an environment variable named \""s + VAR + "\"\n")));
   }
 
-  SECTION("No Throw") { CHECK(cet::getenv(VAR, std::nothrow).empty()); }
+  SECTION("No Throw")
+  {
+    CHECK(cet::getenv(VAR, std::nothrow).empty());
+  }
 }

@@ -240,7 +240,8 @@ public:
   ~value_ptr() noexcept { reset(); }
 
   // copying assignments:
-  value_ptr& operator=(std::nullptr_t) noexcept
+  value_ptr&
+  operator=(std::nullptr_t) noexcept
   {
     reset(nullptr);
     return *this;
@@ -282,8 +283,16 @@ public:
   }
 
   // observers:
-  reference operator*() const { return *get(); }
-  pointer operator->() const noexcept { return get(); }
+  reference
+  operator*() const
+  {
+    return *get();
+  }
+  pointer
+  operator->() const noexcept
+  {
+    return get();
+  }
   pointer
   get() const noexcept
   {

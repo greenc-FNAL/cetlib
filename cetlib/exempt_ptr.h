@@ -61,7 +61,7 @@ namespace cet {
 
   // Deduction guide
   template <class E>
-  exempt_ptr(E*)->exempt_ptr<E>;
+  exempt_ptr(E*) -> exempt_ptr<E>;
 }
 
 // ======================================================================
@@ -107,7 +107,8 @@ public:
   {}
 
   // pointer-accepting assignments:
-  constexpr exempt_ptr& operator=(std::nullptr_t) noexcept
+  constexpr exempt_ptr&
+  operator=(std::nullptr_t) noexcept
   {
     reset(nullptr);
     return *this;
@@ -132,8 +133,16 @@ public:
   }
 
   // observers:
-  constexpr reference operator*() const noexcept { return *get(); }
-  constexpr pointer operator->() const noexcept { return get(); }
+  constexpr reference
+  operator*() const noexcept
+  {
+    return *get();
+  }
+  constexpr pointer
+  operator->() const noexcept
+  {
+    return get();
+  }
   constexpr pointer
   get() const noexcept
   {
@@ -178,11 +187,13 @@ public:
   {
     return !operator==(y);
   }
-  constexpr bool operator==(std::nullptr_t) const noexcept
+  constexpr bool
+  operator==(std::nullptr_t) const noexcept
   {
     return p == nullptr;
   }
-  constexpr bool operator!=(std::nullptr_t) const noexcept
+  constexpr bool
+  operator!=(std::nullptr_t) const noexcept
   {
     return !operator==(nullptr);
   }

@@ -3,7 +3,7 @@
 #define _POSIX_C_SOURCE 200112L
 #endif
 
-#include "catch2/catch.hpp"
+#include "catch2/catch_test_macros.hpp"
 
 #include "cetlib/detail/plugin_search_path.h"
 #include "cetlib/getenv.h"

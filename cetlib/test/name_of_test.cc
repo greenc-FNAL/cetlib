@@ -73,8 +73,8 @@ BOOST_AUTO_TEST_CASE(array_types_test)
 {
   BOOST_TEST(name_of<sometype[1]>::is() == "array[1]-of_unknown-type");
   BOOST_TEST(name_of<int[9]>::is() == "array[9]-of_int");
-  BOOST_TEST(name_of<int * [9]>::is() == "array[9]-of_ptr-to_int");
-  BOOST_TEST(name_of<int const * [9]>::is() == "array[9]-of_ptr-to_c_int");
+  BOOST_TEST(name_of<int* [9]>::is() == "array[9]-of_ptr-to_int");
+  BOOST_TEST(name_of<int const* [9]>::is() == "array[9]-of_ptr-to_c_int");
 }
 
 BOOST_AUTO_TEST_CASE(library_types_test)

@@ -75,7 +75,8 @@ namespace {
   } // ::detail.
 
   std::string
-  canonicalizePath(std::string const& path_str) try {
+  canonicalizePath(std::string const& path_str)
+  try {
     bfs::path path{path_str};
     // If specified path does not exist, complain later.
     if (bfs::exists(path)) {

@@ -98,10 +98,11 @@ public:
   using const_reverse_iterator = typename impl_type::const_reverse_iterator;
 
   using allocator_type = typename impl_type::allocator_type;
-  using pointer = typename allocator_type::pointer;
-  using const_pointer = typename allocator_type::const_pointer;
-  using reference = typename allocator_type::reference;
-  using const_reference = typename allocator_type::const_reference;
+  using pointer = typename std::allocator_traits<allocator_type>::pointer;
+  using const_pointer =
+    typename std::allocator_traits<allocator_type>::const_pointer;
+  using reference = value_type&;
+  using const_reference = const value_type&;
 
   // c'tors:
   map_vector() = default;
@@ -167,7 +168,11 @@ public:
   mapped_type const& getOrThrow(key_type key) const;
 
   mapped_type& operator[](key_type key);
-  mapped_type const& operator[](key_type key) const { return getOrThrow(key); }
+  mapped_type const&
+  operator[](key_type key) const
+  {
+    return getOrThrow(key);
+  }
   mapped_type const&
   at(key_type key) const
   {
@@ -453,7 +458,8 @@ cet::map_vector<Value>::getOrThrow(key_type const key) const
 }
 
 template <class Value>
-Value& cet::map_vector<Value>::operator[](key_type const key)
+Value&
+cet::map_vector<Value>::operator[](key_type const key)
 {
   value_type const v{key, mapped_type{}};
   auto const begin = v_.begin(), end = v_.end();
