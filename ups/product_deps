@@ -251,7 +251,7 @@ perllib	product_dir
 ####################################
 product		version		qual	flags		<table_format=2>
 boost		v1_81_0a	-
-hep_concurrency	v1_08_00	-
+hep_concurrency	v1_09_00	-
 sqlite		v3_40_01_00	-
 catch		v3_3_1a		-	only_for_build
 cetmodules	v3_21_00	-	only_for_build
