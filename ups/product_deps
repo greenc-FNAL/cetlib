@@ -250,11 +250,11 @@ perllib	product_dir
 #
 ####################################
 product		version		qual	flags		<table_format=2>
-boost		v1_81_0a	-
-hep_concurrency	v1_09_00	-
+boost		v1_82_0	-
+hep_concurrency	v1_09_01	-
 sqlite		v3_40_01_00	-
-catch		v3_3_1a		-	only_for_build
-cetmodules	v3_21_00	-	only_for_build
+catch		v3_3_2		-	only_for_build
+cetmodules	v3_21_02	-	only_for_build
 end_product_list
 ####################################
 
@@ -320,6 +320,8 @@ e26:debug	e26:debug	e26	e26:debug	-nq-
 e26:prof	e26:prof	e26	e26:prof	-nq-
 e27:debug	e27:debug	e27	e27:debug	-nq-
 e27:prof	e27:prof	e27	e27:prof	-nq-
+e28:debug	e28:debug	e28	e28:debug	-nq-
+e28:prof	e28:prof	e28	e28:prof	-nq-
 end_qualifier_list
 ####################################
 
