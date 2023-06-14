@@ -199,3 +199,5 @@ cet_make_exec(NAME hypot_test USE_CATCH2_MAIN NO_INSTALL)
 include(ParseAndAddCatchTests)
 set(AdditionalCatchParameters -s)
 ParseAndAddCatchTests(hypot_test)
+
+cet_test(bad_hard_cast_t COMPILE_ONLY TEST_PROPERTIES WILL_FAIL TRUE)
