@@ -14,6 +14,10 @@
 #include <ostream>
 #include <string>
 #include <vector>
+#include "cetlib_except/cxx20_macros.h"
+#if CET_CONCEPTS_AVAILABLE
+#include <concepts>
+#endif
 
 namespace cet {
   // A search_path is used to manage the use of a PATH-like
@@ -29,6 +33,13 @@ namespace cet {
   extern path_tag_t const path_tag;
 
   std::ostream& operator<<(std::ostream& os, search_path const& p);
+
+  #if CET_CONCEPTS_AVAILABLE
+  namespace detail {
+    template <class OutIter>
+    concept valid_iter = std::output_iterator<OutIter, std::string>;
+  }
+  #endif
 }
 
 // ----------------------------------------------------------------------
@@ -86,6 +97,9 @@ public:
   // written to 'dest', and the total number of matching paths is the
   // return value of the function.
   template <class OutIter>
+  #if CET_CONCEPTS_AVAILABLE
+  requires (cet::detail::valid_iter<OutIter>)
+  #endif
   std::size_t find_files(std::string const& filename_pattern,
                          OutIter dest) const;
 
@@ -98,6 +112,9 @@ private:
 }; // search_path
 
 template <class OutIter>
+#if CET_CONCEPTS_AVAILABLE
+requires cet::detail::valid_iter<OutIter>
+#endif
 std::size_t
 cet::search_path::find_files(std::string const& pattern, OutIter dest) const
 {
