@@ -201,6 +201,7 @@ set(AdditionalCatchParameters -s)
 ParseAndAddCatchTests(hypot_test)
 
 foreach(compile_test IN ITEMS
-    bad_hard_cast_t bad_copy_all_t bad_for_all_container_t bad_for_all_func_t)
+    bad_hard_cast_t bad_copy_all_t bad_for_all_container_t bad_for_all_func_t bad_pow_t)
   cet_test(${compile_test} COMPILE_ONLY TEST_PROPERTIES WILL_FAIL TRUE)
 endforeach()
+
