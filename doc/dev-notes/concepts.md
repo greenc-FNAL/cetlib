@@ -54,7 +54,7 @@
 * [ ] `registry_via_id.h`
 * [ ] `replace_all.h`
 * [ ] `rpad.h`
-* [ ] `search_path.h`
+* [x] `search_path.h`
 * [ ] `sha1.h`
 * [ ] `shlib_utils.h`
 * [ ] `simple_stats.h`
