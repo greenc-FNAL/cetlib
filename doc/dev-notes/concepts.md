@@ -22,7 +22,8 @@
 * [ ] `cpu_timer.h`
 * [ ] `crc32.h`
 * [ ] `detail/ostream_handle_impl.h`
-* [ ] `detail/plugin_search_path.h`
+* [x] `detail/plugin_search_path.h`
+  * Diagnostics are already of sufficient clarity.
 * [ ] `detail/provide_file_path.h`
 * [ ] `detail/wrapLibraryManagerException.h`
 * [ ] `exempt_ptr.h`
