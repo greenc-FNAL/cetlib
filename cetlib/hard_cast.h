@@ -7,14 +7,14 @@
 #endif
 #include <cstring>
 
+namespace cet {
 #if CET_CONCEPTS_AVAILABLE
-namespace detail {
-  template <typename T>
-  concept cet_pointer = std::is_pointer_v<T>;
-}
+  namespace detail {
+    template <typename T>
+    concept cet_pointer = std::is_pointer_v<T>;
+  }
 #endif
 
-namespace cet {
   // For use when only a C++ {dynamic,static,reinterpret}_cast is not
   // sufficient to the task. The only case of this known currently is
   // when using dlopen, dlsym, etc. and a void * must be cast to a
@@ -35,7 +35,7 @@ namespace cet {
 }
 
 #if CET_CONCEPTS_AVAILABLE
-template <detail::cet_pointer PTR_T>
+template <cet::detail::cet_pointer PTR_T>
 #else
 template <typename PTR_T>
 #endif
@@ -48,7 +48,7 @@ cet::hard_cast(void* src)
 }
 
 #if CET_CONCEPTS_AVAILABLE
-template <detail::cet_pointer PTR_T>
+template <cet::detail::cet_pointer PTR_T>
 #else
 template <typename PTR_T>
 #endif
