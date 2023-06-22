@@ -12,7 +12,8 @@
 * [x] `PluginFactory.h`
   * Concepts would provide very little value and decrease the readability of existing code.
   * Equivalent value would be provided by an extra line of comment.
-* [ ] `PluginTypeDeducer.h`
+* [x] `PluginTypeDeducer.h`
+  * The only use of templates here is unconstrained by design.
 * [x] `ProvideFilePathMacro.h`
   * No use of templates.
 * [x] `ProvideMakePluginMacros.h`
