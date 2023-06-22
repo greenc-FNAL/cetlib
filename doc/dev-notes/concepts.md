@@ -2,7 +2,8 @@
 
 ## Progress
 
-* [ ] `BasicPluginFactory.h`
+* [x] `BasicPluginFactory.h`
+  * Refer to reasons listed below `PluginFactory.h`
 * [ ] `HorizontalRule.h`
 * [ ] `LibraryManager.h`
 * [ ] `MD5Digest.h`
