@@ -6,7 +6,9 @@
 * [ ] `HorizontalRule.h`
 * [ ] `LibraryManager.h`
 * [ ] `MD5Digest.h`
-* [ ] `PluginFactory.h`
+* [x] `PluginFactory.h`
+  * Concepts would provide very little value and decrease the readability of existing code.
+  * Equivalent value would be provided by an extra line of comment.
 * [ ] `PluginTypeDeducer.h`
 * [ ] `ProvideFilePathMacro.h`
 * [ ] `ProvideMakePluginMacros.h`
