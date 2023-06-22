@@ -11,9 +11,20 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include "cetlib_except/cxx20_macros.h"
+#if CET_CONCEPTS_AVAILABLE
+#include <concepts>
+#endif
+
 
 namespace cet {
   class LibraryManager;
+#if CET_CONCEPTS_AVAILABLE
+  namespace detail {
+    template <class OutIter>
+    concept valid_iter = std::output_iterator<OutIter, std::string>;
+  }
+  #endif
 }
 
 class cet::LibraryManager {
@@ -92,17 +103,26 @@ public:
   // of entries.
   size_t getLoadableLibraries(std::vector<std::string>& list) const;
   template <class OutIter>
+#if CET_CONCEPTS_AVAILABLE
+  requires (cet::detail::valid_iter<OutIter>)
+#endif
   size_t getLoadableLibraries(OutIter dest) const;
 
   // Get a list of already-loaded libraries (full paths). Returns the
   // number of entries.
   size_t getLoadedLibraries(std::vector<std::string>& list) const;
   template <class OutIter>
+#if CET_CONCEPTS_AVAILABLE
+  requires (cet::detail::valid_iter<OutIter>)
+#endif
   size_t getLoadedLibraries(OutIter dest) const;
 
   // Get list of valid libspecs. Returns the number of entries.
   size_t getValidLibspecs(std::vector<std::string>& list) const;
   template <class OutIter>
+#if CET_CONCEPTS_AVAILABLE
+  requires (cet::detail::valid_iter<OutIter>)
+#endif
   size_t getValidLibspecs(OutIter dest) const;
 
   // Get pair of short and full libspecs corresponding to library full
@@ -210,6 +230,9 @@ cet::LibraryManager::getSymbolByPath(std::string const& lib_loc,
 }
 
 template <class OutIter>
+#if CET_CONCEPTS_AVAILABLE
+  requires (cet::detail::valid_iter<OutIter>)
+#endif
 size_t
 cet::LibraryManager::getLoadableLibraries(OutIter dest) const
 {
@@ -261,6 +284,9 @@ cet::LibraryManager::getSymbolByPath(std::string const& lib_loc,
 }
 
 template <class OutIter>
+#if CET_CONCEPTS_AVAILABLE
+  requires (cet::detail::valid_iter<OutIter>)
+#endif
 size_t
 cet::LibraryManager::getLoadedLibraries(OutIter dest) const
 {
@@ -273,6 +299,9 @@ cet::LibraryManager::getLoadedLibraries(OutIter dest) const
 }
 
 template <class OutIter>
+#if CET_CONCEPTS_AVAILABLE
+  requires (cet::detail::valid_iter<OutIter>)
+#endif
 size_t
 cet::LibraryManager::getValidLibspecs(OutIter dest) const
 {
