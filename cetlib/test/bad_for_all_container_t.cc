@@ -5,7 +5,9 @@ struct bad_container {
   T t;
 };
 
-int main() {
+int
+main()
+{
   bad_container<int> bc;
   cet::for_all(bc, [](int b) { return b; });
 }

@@ -3,34 +3,28 @@
 
 #include "cetlib_except/cxx20_macros.h"
 #if CET_CONCEPTS_AVAILABLE
+#include "cetlib/detail/cetlib_concepts.h"
 #include <concepts>
 #endif
 #include <cstring>
 
 namespace cet {
+// For use when only a C++ {dynamic,static,reinterpret}_cast is not
+// sufficient to the task. The only case of this known currently is
+// when using dlopen, dlsym, etc. and a void * must be cast to a
+// function pointer.
 #if CET_CONCEPTS_AVAILABLE
-  namespace detail {
-    template <typename T>
-    concept cet_pointer = std::is_pointer_v<T>;
-  }
-#endif
-
-  // For use when only a C++ {dynamic,static,reinterpret}_cast is not
-  // sufficient to the task. The only case of this known currently is
-  // when using dlopen, dlsym, etc. and a void * must be cast to a
-  // function pointer.
-  #if CET_CONCEPTS_AVAILABLE
   template <detail::cet_pointer PTR_T>
-  #else
+#else
   template <typename PTR_T>
-  #endif
+#endif
   PTR_T hard_cast(void* src);
 
-  #if CET_CONCEPTS_AVAILABLE
+#if CET_CONCEPTS_AVAILABLE
   template <detail::cet_pointer PTR_T>
-  #else
+#else
   template <typename PTR_T>
-  #endif
+#endif
   void hard_cast(void* src, PTR_T& dest);
 }
 

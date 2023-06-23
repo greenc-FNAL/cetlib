@@ -9,13 +9,14 @@
 
 #include "cetlib/container_algorithms.h"
 
+#include "cetlib_except/cxx20_macros.h"
 #include <cstdlib>
 #include <new>
 #include <ostream>
 #include <string>
 #include <vector>
-#include "cetlib_except/cxx20_macros.h"
 #if CET_CONCEPTS_AVAILABLE
+#include "cetlib/detail/cetlib_concepts.h"
 #include <concepts>
 #endif
 
@@ -33,13 +34,6 @@ namespace cet {
   extern path_tag_t const path_tag;
 
   std::ostream& operator<<(std::ostream& os, search_path const& p);
-
-  #if CET_CONCEPTS_AVAILABLE
-  namespace detail {
-    template <class OutIter>
-    concept valid_iter = std::output_iterator<OutIter, std::string>;
-  }
-  #endif
 }
 
 // ----------------------------------------------------------------------
@@ -97,11 +91,11 @@ public:
   // written to 'dest', and the total number of matching paths is the
   // return value of the function.
   template <class OutIter>
-  #if CET_CONCEPTS_AVAILABLE
-  requires (cet::detail::valid_iter<OutIter>)
-  #endif
-  std::size_t find_files(std::string const& filename_pattern,
-                         OutIter dest) const;
+#if CET_CONCEPTS_AVAILABLE
+    requires(cet::detail::valid_iter<OutIter>)
+#endif
+  std::size_t
+    find_files(std::string const& filename_pattern, OutIter dest) const;
 
   // Return the string format (colon-delimited) of the search path.
   std::string to_string() const;
@@ -113,7 +107,7 @@ private:
 
 template <class OutIter>
 #if CET_CONCEPTS_AVAILABLE
-requires cet::detail::valid_iter<OutIter>
+  requires cet::detail::valid_iter<OutIter>
 #endif
 std::size_t
 cet::search_path::find_files(std::string const& pattern, OutIter dest) const

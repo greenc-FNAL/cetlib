@@ -5,26 +5,20 @@
 #include "cetlib/search_path.h"
 #include "cetlib/shlib_utils.h"
 
+#include "cetlib_except/cxx20_macros.h"
 #include <cstring>
 #include <map>
 #include <set>
 #include <string>
 #include <utility>
 #include <vector>
-#include "cetlib_except/cxx20_macros.h"
 #if CET_CONCEPTS_AVAILABLE
+#include "cetlib/detail/cetlib_concepts.h"
 #include <concepts>
 #endif
 
-
 namespace cet {
   class LibraryManager;
-#if CET_CONCEPTS_AVAILABLE
-  namespace detail {
-    template <class OutIter>
-    concept valid_iter = std::output_iterator<OutIter, std::string>;
-  }
-  #endif
 }
 
 class cet::LibraryManager {
@@ -104,7 +98,7 @@ public:
   size_t getLoadableLibraries(std::vector<std::string>& list) const;
   template <class OutIter>
 #if CET_CONCEPTS_AVAILABLE
-  requires (cet::detail::valid_iter<OutIter>)
+    requires(cet::detail::valid_iter<OutIter>)
 #endif
   size_t getLoadableLibraries(OutIter dest) const;
 
@@ -113,7 +107,7 @@ public:
   size_t getLoadedLibraries(std::vector<std::string>& list) const;
   template <class OutIter>
 #if CET_CONCEPTS_AVAILABLE
-  requires (cet::detail::valid_iter<OutIter>)
+    requires(cet::detail::valid_iter<OutIter>)
 #endif
   size_t getLoadedLibraries(OutIter dest) const;
 
@@ -121,7 +115,7 @@ public:
   size_t getValidLibspecs(std::vector<std::string>& list) const;
   template <class OutIter>
 #if CET_CONCEPTS_AVAILABLE
-  requires (cet::detail::valid_iter<OutIter>)
+    requires(cet::detail::valid_iter<OutIter>)
 #endif
   size_t getValidLibspecs(OutIter dest) const;
 
@@ -231,10 +225,9 @@ cet::LibraryManager::getSymbolByPath(std::string const& lib_loc,
 
 template <class OutIter>
 #if CET_CONCEPTS_AVAILABLE
-  requires (cet::detail::valid_iter<OutIter>)
+  requires(cet::detail::valid_iter<OutIter>)
 #endif
-size_t
-cet::LibraryManager::getLoadableLibraries(OutIter dest) const
+size_t cet::LibraryManager::getLoadableLibraries(OutIter dest) const
 {
   size_t count{};
   for (auto const& lib_loc : lib_loc_map_) {
@@ -285,10 +278,9 @@ cet::LibraryManager::getSymbolByPath(std::string const& lib_loc,
 
 template <class OutIter>
 #if CET_CONCEPTS_AVAILABLE
-  requires (cet::detail::valid_iter<OutIter>)
+  requires(cet::detail::valid_iter<OutIter>)
 #endif
-size_t
-cet::LibraryManager::getLoadedLibraries(OutIter dest) const
+size_t cet::LibraryManager::getLoadedLibraries(OutIter dest) const
 {
   size_t count{};
   for (auto const& lib_ptr : lib_ptr_map_) {
@@ -300,10 +292,9 @@ cet::LibraryManager::getLoadedLibraries(OutIter dest) const
 
 template <class OutIter>
 #if CET_CONCEPTS_AVAILABLE
-  requires (cet::detail::valid_iter<OutIter>)
+  requires(cet::detail::valid_iter<OutIter>)
 #endif
-size_t
-cet::LibraryManager::getValidLibspecs(OutIter dest) const
+size_t cet::LibraryManager::getValidLibspecs(OutIter dest) const
 {
   size_t count{};
   for (auto const& spec_trans : spec_trans_map_) {
