@@ -25,23 +25,13 @@ namespace cet {
   };
 
   /// struct right_bits<U, n>.
-  template <class U,
-            std::size_t n,
-            bool = std::is_unsigned_v<U>,
-            bool = (n + 1) < bit_size_v<U>>
-  struct right_bits;
+  template <std::unsigned_integral U,
+            std::size_t n>
+  struct right_bits{
+    static constexpr U value = (n + 1) < bit_size_v<U> ? bit_number_v<U, n + 1> - static_cast<U>(1u) : ~0u;
+};
 
-  template <class U, std::size_t n>
-  struct right_bits<U, n, true, true> {
-    static constexpr U value = bit_number_v<U, n + 1> - static_cast<U>(1u);
-  };
-
-  template <class U, std::size_t n>
-  struct right_bits<U, n, true, false> {
-    static constexpr U value = ~0u;
-  };
-
-  template <class U, std::size_t n>
+  template <std::unsigned_integral U, std::size_t n>
   constexpr U right_bits_v = right_bits<U, n>::value;
 
   // struct left_bits<U, n>.
