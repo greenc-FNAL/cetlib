@@ -13,13 +13,15 @@ namespace cet {
   struct bit_size {
     static constexpr std::size_t value = std::numeric_limits<U>::digits;
   };
-  
+
   template <std::unsigned_integral U>
   constexpr std::size_t bit_size_v = bit_size<U>::value;
 
   /// struct bit_number<U, n>.
-  template <std::unsigned_integral U, std::size_t n> struct bit_number {
-    static constexpr std::size_t value = (n<bit_size_v<U>) ? U(1u) << n : U(0u);
+  template <std::unsigned_integral U, std::size_t n>
+  struct bit_number {
+    static constexpr std::size_t value =
+      (n < bit_size_v<U>) ? U(1u) << n : U(0u);
   };
 
   /// struct right_bits<U, n>.
