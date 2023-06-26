@@ -6,7 +6,7 @@
   * Refer to reasons listed below `PluginFactory.h`
 * [x] `HorizontalRule.h`
   * No use of templates.
-* [ ] `LibraryManager.h`
+* [x] `LibraryManager.h`
 * [x] `MD5Digest.h`
   * No use of templates.
 * [x] `PluginFactory.h`
