@@ -14,7 +14,6 @@ cet_register_export_set(SET_NAME Testing NAMESPACE cetlib_test SET_DEFAULT)
 add_subdirectory(sqlite)
 
 cet_test(bit_test)
-cet_test(bit_test_cxx20)
 cet_test(value_ptr_test_2)
 cet_test(value_ptr_test_3)
 cet_test(value_ptr_test_4)
@@ -202,6 +201,6 @@ set(AdditionalCatchParameters -s)
 ParseAndAddCatchTests(hypot_test)
 
 foreach(compile_test IN ITEMS
-    bad_hard_cast_t bad_copy_all_t bad_for_all_container_t bad_for_all_func_t bad_pow_t bad_search_path_t bad_lib_manager_t)
+    bad_hard_cast_t bad_copy_all_t bad_for_all_container_t bad_for_all_func_t bad_pow_t bad_search_path_t bad_lib_manager_t bad_bit_manipulation_t)
   cet_test(${compile_test} COMPILE_ONLY TEST_PROPERTIES WILL_FAIL TRUE)
 endforeach()

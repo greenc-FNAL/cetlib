@@ -87,6 +87,9 @@ namespace cet {
     static constexpr U value = U(-1);
   };
 
+  template <class U, std::size_t n>
+  constexpr U left_bits_v = left_bits<U, n>::value;
+
   // U circ_lshift<U>().
   template <class U>
   inline constexpr std::enable_if_t<std::is_unsigned_v<U>, U>
