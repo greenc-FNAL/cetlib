@@ -18,11 +18,6 @@
 
 namespace cet {
 
-  template <class U>
-  struct bit_size {
-    static constexpr std::size_t value = std::numeric_limits<U>::digits;
-  };
-
   /// struct bit_size<U>.
   template <class U, bool = std::is_unsigned_v<U>>
   struct bit_size;
