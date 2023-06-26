@@ -20,7 +20,8 @@
   * No use of templates.
 * [x] `base_converter.h`
   * No use of templates.
-* [ ] `bit_manipulation.h`
+* [x] `bit_manipulation.h`
+* [x] `bit_manipulation_cxx20.h`
 * [x] `bold_fontify.h`
   * No use of templates.
 * [x] `canonical_number.h`
