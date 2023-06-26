@@ -76,8 +76,7 @@ namespace cet {
     return (X << n) | (X >> (nbits - n) & mask);
   }
 }
-#endif /* CET_CONCEPTS_AVAILABLE */
-#endif /* cetlib_bit_manipulation_h */
+#endif /* cetlib_bit_manipulation_cxx20_h */
 
 // Local Variables:
 // mode: c++
