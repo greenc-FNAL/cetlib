@@ -1,55 +1,26 @@
-#ifndef cetlib_bit_manipulation_h
-#define cetlib_bit_manipulation_h
+#ifndef cetlib_bit_manipulation_cxx20_h
+#define cetlib_bit_manipulation_cxx20_h
 
-// ======================================================================
-//
-// bit_manipulation: Compile-time bit manipulations
-//
-// ======================================================================
-
-#include "cetlib_except/cxx20_macros.h"
-#if CET_CONCEPTS_AVAILABLE
-#include "cetlib/bit_maniplation_cxx20.h"
-#else
-
+#include <concepts>
 #include <cstddef>
 #include <limits>
 #include <type_traits>
 
 namespace cet {
 
-  template <class U>
+  /// struct bit_size<U>.
+  template <std::unsigned_integral U>
   struct bit_size {
     static constexpr std::size_t value = std::numeric_limits<U>::digits;
   };
   
-  /// struct bit_size<U>.
-  template <class U, bool = std::is_unsigned_v<U>>
-  struct bit_size;
-
-  template <class U>
-  struct bit_size<U, true> {
-    static constexpr std::size_t value = std::numeric_limits<U>::digits;
-  };
-
-  template <class U>
+  template <std::unsigned_integral U>
   constexpr std::size_t bit_size_v = bit_size<U>::value;
 
   /// struct bit_number<U, n>.
-  template <class U, std::size_t n, bool = n<bit_size_v<U>> struct bit_number;
-
-  template <class U, std::size_t n>
-  struct bit_number<U, n, true> {
-    static constexpr std::size_t value = U(1u) << n;
+  template <std::unsigned_integral U, std::size_t n> struct bit_number {
+    static constexpr std::size_t value = (n<bit_size_v<U>) ? U(1u) << n : U(0u);
   };
-
-  template <class U, std::size_t n>
-  struct bit_number<U, n, false> {
-    static constexpr std::size_t value = U(0u);
-  };
-
-  template <class U, std::size_t n>
-  constexpr std::size_t bit_number_v = bit_number<U, n>::value;
 
   /// struct right_bits<U, n>.
   template <class U,
