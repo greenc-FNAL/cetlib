@@ -9,7 +9,7 @@
 
 #include "cetlib_except/cxx20_macros.h"
 #if CET_CONCEPTS_AVAILABLE
-#include "cetlib/bit_maniplation_cxx20.h"
+#include "cetlib/bit_manipulation_cxx20.h"
 #else
 
 #include <cstddef>
