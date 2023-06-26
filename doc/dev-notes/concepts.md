@@ -38,7 +38,8 @@
   * No use of templates.
 * [x] `crc32.h`
   * No use of templates.
-* [ ] `detail/ostream_handle_impl.h`
+* [x] `detail/ostream_handle_impl.h`
+  * Diagnostics are already of sufficient clarity.
 * [x] `detail/plugin_search_path.h`
   * No use of templates.
 * [x] `detail/provide_file_path.h`
@@ -71,7 +72,8 @@
 * [ ] `nybbler.h`
 * [x] `os_libpath.h`
   * No use of templates.
-* [ ] `ostream_handle.h`
+* [x] `ostream_handle.h`
+  * Diagnostics are already of sufficient clarity.
 * [x] `parsed_program_options.h`
   * No use of templates.
 * [x] `plugin_libpath.h`
