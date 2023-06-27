@@ -70,7 +70,8 @@
   * Class is ripe for deprecation and replacement by std::optional [c++17]
 * [x] `metaprogramming.h`
   * Candidate for replacement when supporting standards below C++20 is no longer necessary.
-* [ ] `name_of.h`
+* [x] `name_of.h`
+  * Concepts not applicable
 * [x] `no_delete.h`
   * No use of templates.
 * [ ] `nybbler.h`
