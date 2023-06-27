@@ -64,7 +64,8 @@
   * No use of templates.
 * [x] `lpad.h`
   * No use of templates.
-* [ ] `map_vector.h`
+* [x] `map_vector.h`
+  * Value is not meant to be constrained.
 * [ ] `maybe_ref.h`
 * [ ] `metaprogramming.h`
 * [ ] `name_of.h`
