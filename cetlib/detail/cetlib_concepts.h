@@ -4,6 +4,7 @@
 #include <concepts>
 #include <iterator>
 #include <string>
+#include <type_traits>
 
 namespace cet::detail {
   template <typename T>
@@ -13,7 +14,7 @@ namespace cet::detail {
   concept valid_iter = std::output_iterator<OutIter, std::string>;
 
   template <class T>
-  concept is_arithmetic = std::integral<T> || std::floating_point<T>;
+  concept is_arithmetic = std::is_arithmetic_v<T>;
 }
 
 #endif

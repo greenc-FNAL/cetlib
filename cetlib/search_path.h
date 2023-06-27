@@ -92,7 +92,7 @@ public:
   // return value of the function.
   template <class OutIter>
 #if CET_CONCEPTS_AVAILABLE
-    requires(cet::detail::valid_iter<OutIter>)
+    requires(detail::valid_iter<OutIter>)
 #endif
   std::size_t
     find_files(std::string const& filename_pattern, OutIter dest) const;

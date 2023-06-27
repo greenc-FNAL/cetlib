@@ -64,6 +64,11 @@
 #include <type_traits>
 #include <utility>
 
+#include "cetlib_except/cxx20_macros.h"
+#if CET_CONCEPTS_AVAILABLE
+#include <concepts>
+#endif
+
 namespace cet {
   template <class Element>
   struct default_copy;
@@ -75,23 +80,30 @@ namespace cet {
     struct has_clone;
 
     template <typename Element>
-    concept PolymorphicWithClone = (std::is_polymorphic_v<Element> &&
-                                    has_clone<Element>::value);
-
-    template <typename Element>
     struct default_action : public default_copy<Element> {
       using default_copy<Element>::operator();
     };
 
-    template <PolymorphicWithClone Element>
+#if CET_CONCEPTS_AVAILABLE
+    template <typename Element>
+    concept PolymorphicWithClone = (std::is_polymorphic_v<Element> &&
+                                    has_clone<Element>::value);
+#endif
+
+    template <typename Element>
+#if CET_CONCEPTS_AVAILABLE
+      requires(PolymorphicWithClone<Element>)
+#endif
     struct default_action<Element> : public default_clone<Element> {
       using default_clone<Element>::operator();
     };
 
+#if CET_CONCEPTS_AVAILABLE
     template <typename Element, typename Cloner, typename E2>
     concept WouldSlice = std::is_polymorphic_v<E2> &&
                          std::is_same_v<Cloner, _::default_action<Element>> && !
     _::PolymorphicWithClone<Element>;
+#endif
 
   }
 
@@ -203,7 +215,9 @@ public:
   constexpr value_ptr(std::nullptr_t) noexcept : p{nullptr} {}
 
   template <class E2>
+#if CET_CONCEPTS_AVAILABLE
     requires is_compatible_v<E2> && (!_::WouldSlice<Element, Cloner, E2>)
+#endif
   explicit value_ptr(E2* other) noexcept : p{other}
   {}
 
