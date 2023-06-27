@@ -68,7 +68,8 @@
   * Value is not meant to be constrained.
 * [x] `maybe_ref.h`
   * Class is ripe for deprecation and replacement by std::optional [c++17]
-* [ ] `metaprogramming.h`
+* [x] `metaprogramming.h`
+  * Candidate for replacement when supporting standards below C++20 is no longer necessary.
 * [ ] `name_of.h`
 * [x] `no_delete.h`
   * No use of templates.
