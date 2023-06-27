@@ -74,7 +74,8 @@
   * Concepts not applicable
 * [x] `no_delete.h`
   * No use of templates.
-* [ ] `nybbler.h`
+* [x] `nybbler.h`
+  * No use of templates.
 * [x] `os_libpath.h`
   * No use of templates.
 * [x] `ostream_handle.h`
@@ -87,8 +88,10 @@
   * Diagnostics are already of sufficient clarity.
   * Encapsulating all acceptable use cases would appear to be overly
     complex.
-* [ ] `propagate_const.h`
-* [ ] `registry.h`
+* [x] `propagate_const.h`
+  * Candidate for replacement using std::propagate_const if it gets integrated into a standard.
+* [x] `registry.h`
+  * Concepts not necessary.
 * [ ] `registry_via_id.h`
 * [x] `replace_all.h`
   * No use of templates.
@@ -99,7 +102,8 @@
   * No use of templates.
 * [x] `shlib_utils.h`
   * No use of templates.
-* [ ] `simple_stats.h`
+* [x] `simple_stats.h`
+  * Only use of templates is for a streaming operator. Use of templates is unnecessary.
 * [ ] `split.h`
 * [x] `split_by_regex.h`
   * No use of templates.
@@ -131,5 +135,6 @@
 * [ ] `sqlite/query_result.h`
 * [ ] `sqlite/select.h`
 * [ ] `sqlite/statistics.h`
-* [ ] `trim.h`
+* [x] `trim.h`
+  * No use of templates.
 * [ ] `value_ptr.h`
