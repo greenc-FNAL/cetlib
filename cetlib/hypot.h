@@ -12,8 +12,13 @@
 #include <type_traits>
 #include <utility>
 
+#include "cetlib_except/cxx20_macros.h"
+#if CET_CONCEPTS_AVAILABLE
+#include <concepts>
+#include "cetlib/detail/cetlib_concepts.h"
+#endif
 // ----------------------------------------------------------------------
-
+#if !CET_CONCEPTS_AVAILABLE
 namespace cet {
   template <class T>
   std::enable_if_t<std::is_arithmetic_v<T>, T> hypot(T x, T y);
@@ -24,6 +29,7 @@ namespace cet {
   template <class T>
   std::enable_if_t<std::is_arithmetic_v<T>, T> checked_hypot(T x, T y);
 }
+
 
 // ----------------------------------------------------------------------
 // unchecked_hypot<>:
@@ -61,9 +67,11 @@ cet::hypot(T x, T y)
 {
   return checked_hypot(x, y);
 }
+#else
+
 
 // ======================================================================
-
+#endif /* !CET_CONCEPTS_AVAILABLE */
 #endif /* cetlib_hypot_h */
 
 // Local Variables:

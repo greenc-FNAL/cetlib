@@ -11,6 +11,9 @@ namespace cet::detail {
 
   template <class OutIter>
   concept valid_iter = std::output_iterator<OutIter, std::string>;
+
+  template <class T>
+  concept is_arithmetic = std::integral<T> || std::floating_point<T>;
 }
 
 #endif
