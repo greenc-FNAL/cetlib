@@ -66,7 +66,8 @@
   * No use of templates.
 * [x] `map_vector.h`
   * Value is not meant to be constrained.
-* [ ] `maybe_ref.h`
+* [x] `maybe_ref.h`
+  * Class is ripe for deprecation and replacement by std::optional [c++17]
 * [ ] `metaprogramming.h`
 * [ ] `name_of.h`
 * [x] `no_delete.h`
