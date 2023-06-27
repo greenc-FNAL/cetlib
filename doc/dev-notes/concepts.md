@@ -46,7 +46,8 @@
   * No use of templates.
 * [x] `detail/wrapLibraryManagerException.h`
   * No use of templates.
-* [ ] `exempt_ptr.h`
+* [x] `exempt_ptr.h`
+  * Value proposition is unclear.
 * [x] `filepath_maker.h`
   * No use of templates.
 * [x] `filesystem.h`
