@@ -205,6 +205,17 @@ foreach(compile_test IN ITEMS
   cet_test(${compile_test} COMPILE_ONLY TEST_PROPERTIES WILL_FAIL TRUE)
 endforeach()
 
-cet_test(bad_value_ptr_t COMPILE_ONLY)
-cet_test(bad_value_ptr_t_2 COMPILE_ONLY)
-cet_test(bad_value_ptr_t_3 COMPILE_ONLY)
+foreach(compile_test IN ITEMS
+    bad_value_ptr_t bad_value_ptr_t_2 bad_value_ptr_t_3)
+  cet_test(${compile_test} COMPILE_ONLY)
+endforeach()
+if (CMAKE_CXX_STANDARD GREATER_EQUAL 20)
+  set_property(TEST bad_value_ptr_t PROPERTY PASS_REGULAR_EXPRESSION
+    "is_compatible_v<E2>.*evaluated to ")
+  set_tests_properties(bad_value_ptr_t_2 bad_value_ptr_t_3
+    PROPERTIES PASS_REGULAR_EXPRESSION
+    "!\\(WouldSlice<Element, Cloner, E2>\\).*evaluated to ")
+else()
+  set_tests_properties(bad_value_ptr_t bad_value_ptr_t_2 bad_value_ptr_t_3
+    PROPERTIES WILL_FAIL TRUE)
+endif()
