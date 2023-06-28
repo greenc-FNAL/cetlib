@@ -219,3 +219,13 @@ else()
   set_tests_properties(bad_value_ptr_t bad_value_ptr_t_2 bad_value_ptr_t_3
     PROPERTIES WILL_FAIL TRUE)
 endif()
+
+cet_test(bad_hypot_t COMPILE_ONLY)
+if (CMAKE_CXX_STANDARD GREATER_EQUAL 20)
+  set_property(TEST bad_hypot_t PROPERTY PASS_REGULAR_EXPRESSION
+    "is_arithmetic<T>.*evaluated to ")
+else()
+  set_tests_properties(bad_hypot_t
+    PROPERTIES WILL_FAIL TRUE)
+endif()
+
