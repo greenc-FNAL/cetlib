@@ -137,4 +137,4 @@
 * [ ] `sqlite/statistics.h`
 * [x] `trim.h`
   * No use of templates.
-* [ ] `value_ptr.h`
+* [x] `value_ptr.h`
