@@ -116,8 +116,8 @@ namespace cet {
 #if CET_CONCEPTS_AVAILABLE
     template <typename Element, typename Cloner, typename E2>
     concept WouldSlice = std::is_polymorphic_v<E2> &&
-                        (!std::is_same_v<Element, E2>) &&
-                         std::is_base_of_v<Cloner, default_copy<Element>>;
+                         (!std::is_same_v<Element, E2>) &&
+                         std::is_base_of_v<default_copy<Element>, Cloner>;
 #endif
 
   }
@@ -239,8 +239,9 @@ public:
     static_assert(is_compatible_v<E2>,
                   "value_ptr<>'s pointee type is incompatible!");
     static_assert(
-      !std::is_polymorphic_v<E2> && 
-        !(std::is_base_of_v<Cloner, default_copy<Element>>),
+      !(std::is_polymorphic_v<E2> &&
+        (!std::is_same_v<Element, E2>)&&std::is_base_of_v<default_copy<Element>,
+                                                          Cloner>),
       "value_ptr<>'s pointee type would slice when copying!");
 #endif
   }
