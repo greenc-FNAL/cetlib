@@ -204,3 +204,7 @@ foreach(compile_test IN ITEMS
     bad_hard_cast_t bad_copy_all_t bad_for_all_container_t bad_for_all_func_t bad_pow_t bad_search_path_t bad_lib_manager_t bad_bit_manipulation_t)
   cet_test(${compile_test} COMPILE_ONLY TEST_PROPERTIES WILL_FAIL TRUE)
 endforeach()
+
+cet_test(bad_value_ptr_t COMPILE_ONLY)
+cet_test(bad_value_ptr_t_2 COMPILE_ONLY)
+cet_test(bad_value_ptr_t_3 COMPILE_ONLY)
