@@ -229,3 +229,12 @@ else()
     PROPERTIES WILL_FAIL TRUE)
 endif()
 
+cet_test(bad_reg_via_id_t COMPILE_ONLY)
+if (CMAKE_CXX_STANDARD GREATER_EQUAL 20)
+    set_property(TEST bad_reg_via_id_t PROPERTY PASS_REGULAR_EXPRESSION "has_id<K, V>")
+else()
+    set_tests_properties(bad_reg_via_id_t
+        PROPERTIES WILL_FAIL TRUE)
+endif()
+
+

@@ -14,21 +14,40 @@
 #include <map>
 #include <type_traits>
 
-namespace cet {
-  template <class K, class V>
-  class registry_via_id;
+#include "cetlib_except/cxx20_macros.h"
+#if CET_CONCEPTS_AVAILABLE
+#include <concepts>
+#endif
 
+namespace cet {
   namespace detail {
     template <class K, class V, K (V::*)() const = &V::id>
     struct must_have_id {
       using type = K;
     };
+#if CET_CONCEPTS_AVAILABLE
+    //concept requiring that V have a method called id() and that it returns
+    //the same type as K. 
+    template<class K, class V>
+    concept has_id = requires(V val){
+      val.id();
+      requires std::same_as<decltype(val.id()), K>;
+    };
+#endif
   }
+  template <class K, class V>
+  #if CET_CONCEPTS_AVAILABLE
+  requires detail::has_id<K, V>
+#endif
+  class registry_via_id;  
 }
 
 // ======================================================================
 
 template <class K, class V>
+#if CET_CONCEPTS_AVAILABLE
+  requires cet::detail::has_id<K, V>
+#endif
 class cet::registry_via_id {
   // non-instantiable (and non-copyable, just in case):
   registry_via_id() = delete;
@@ -79,7 +98,11 @@ public:
 
   // mutators:
   // A single V;
+  #if CET_CONCEPTS_AVAILABLE
+  static K put(V const& value);
+  #else
   static typename detail::must_have_id<K, V>::type put(V const& value);
+  #endif
   // A range of iterator to V.
   template <class FwdIt>
   static std::enable_if_t<
@@ -121,7 +144,12 @@ private:
 // put() overloads:
 
 template <class K, class V>
+#if CET_CONCEPTS_AVAILABLE
+requires cet::detail::has_id<K, V>
+  K
+#else
 typename cet::detail::must_have_id<K, V>::type
+#endif
 cet::registry_via_id<K, V>::put(V const& value)
 {
   K id = value.id();
@@ -130,6 +158,9 @@ cet::registry_via_id<K, V>::put(V const& value)
 }
 
 template <class K, class V>
+#if CET_CONCEPTS_AVAILABLE
+requires cet::detail::has_id<K, V>
+#endif
 template <class FwdIt>
 inline auto
 cet::registry_via_id<K, V>::put(FwdIt b, FwdIt e) -> std::enable_if_t<
@@ -140,6 +171,9 @@ cet::registry_via_id<K, V>::put(FwdIt b, FwdIt e) -> std::enable_if_t<
 }
 
 template <class K, class V>
+#if CET_CONCEPTS_AVAILABLE
+requires cet::detail::has_id<K, V>
+#endif
 template <class FwdIt>
 inline auto
 cet::registry_via_id<K, V>::put(FwdIt b, FwdIt e) -> std::enable_if_t<
@@ -149,6 +183,9 @@ cet::registry_via_id<K, V>::put(FwdIt b, FwdIt e) -> std::enable_if_t<
 }
 
 template <class K, class V>
+#if CET_CONCEPTS_AVAILABLE
+requires cet::detail::has_id<K, V>
+#endif
 inline void
 cet::registry_via_id<K, V>::put(collection_type const& c)
 {
@@ -159,6 +196,9 @@ cet::registry_via_id<K, V>::put(collection_type const& c)
 // get() overloads:
 
 template <class K, class V>
+#if CET_CONCEPTS_AVAILABLE
+requires cet::detail::has_id<K, V>
+#endif
 V const&
 cet::registry_via_id<K, V>::get(K const& key)
 {
@@ -170,6 +210,9 @@ cet::registry_via_id<K, V>::get(K const& key)
 }
 
 template <class K, class V>
+#if CET_CONCEPTS_AVAILABLE
+requires cet::detail::has_id<K, V>
+#endif
 bool
 cet::registry_via_id<K, V>::get(K const& key, V& value) noexcept
 {
