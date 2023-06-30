@@ -230,15 +230,19 @@ else()
 endif()
 
 foreach (compile_test IN ITEMS
-        bad_reg_via_id_t bad_reg_via_id_t_2)
-cet_test(${compile_test} COMPILE_ONLY)
+    bad_reg_via_id_t bad_reg_via_id_t_2)
+  cet_test(${compile_test} COMPILE_ONLY)
 endforeach()
 if (CMAKE_CXX_STANDARD GREATER_EQUAL 20)
-    set_property(TEST bad_reg_via_id_t PROPERTY PASS_REGULAR_EXPRESSION "val.id()")
-    set_property(TEST bad_reg_via_id_t_2 PROPERTY PASS_REGULAR_EXPRESSION "std::same_as<decltype(val.id()),K>")
+  set_target_properties(bad_reg_via_id_t bad_reg_via_id_t_2 PROPERTIES
+    COMPILE_OPTIONS "$<$<COMPILE_LANGUAGE:CXX>:-fconcepts-diagnostics-depth=2>")
+  set_property(TEST bad_reg_via_id_t PROPERTY
+    PASS_REGULAR_EXPRESSION "error: ‘struct thing’ has no member named ‘id’")
+  set_property(TEST bad_reg_via_id_t_2 PROPERTY
+    PASS_REGULAR_EXPRESSION "note: the expression ‘is_same_v<_Tp, _Up> \\[with _Tp = float; _Up = char\\]’ evaluated to ‘false’")
 else()
-    set_tests_properties(bad_reg_via_id_t bad_reg_via_id_t_2
-        PROPERTIES WILL_FAIL TRUE)
+  set_tests_properties(bad_reg_via_id_t bad_reg_via_id_t_2
+    PROPERTIES WILL_FAIL TRUE)
 endif()
 
 
