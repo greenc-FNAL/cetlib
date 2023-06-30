@@ -55,7 +55,7 @@
 * [x] `getenv.h`
   * No use of templates.
 * [x] `hard_cast.h`
-* [ ] `hypot.h`
+* [x] `hypot.h`
 * [x] `include.h`
   * No use of templates.
 * [x] `includer.h`
@@ -92,7 +92,7 @@
   * Candidate for replacement using std::propagate_const if it gets integrated into a standard.
 * [x] `registry.h`
   * Concepts not necessary.
-* [ ] `registry_via_id.h`
+* [x] `registry_via_id.h`
 * [x] `replace_all.h`
   * No use of templates.
 * [x] `rpad.h`
@@ -104,7 +104,8 @@
   * No use of templates.
 * [x] `simple_stats.h`
   * Only use of templates is for a streaming operator. Use of templates is unnecessary.
-* [ ] `split.h`
+* [x] `split.h`
+  * Concepts not necessary.
 * [x] `split_by_regex.h`
   * No use of templates.
 * [x] `split_path.h`
