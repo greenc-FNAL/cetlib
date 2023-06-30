@@ -234,7 +234,7 @@ foreach (compile_test IN ITEMS
   cet_test(${compile_test} COMPILE_ONLY)
 endforeach()
 if (CMAKE_CXX_STANDARD GREATER_EQUAL 20)
-  set_target_properties(bad_reg_via_id_t bad_reg_via_id_t_2 PROPERTIES
+  set_property(TARGET bad_reg_via_id_t bad_reg_via_id_t_2 APPEND PROPERTY
     COMPILE_OPTIONS "$<$<COMPILE_LANGUAGE:CXX>:-fconcepts-diagnostics-depth=2>")
   set_property(TEST bad_reg_via_id_t PROPERTY
     PASS_REGULAR_EXPRESSION "error: ‘struct thing’ has no member named ‘id’")
