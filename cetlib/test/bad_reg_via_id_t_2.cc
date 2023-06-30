@@ -3,9 +3,8 @@
 using cet::registry_via_id;
 
 /*
-* This test is meant to fail due to the registry
-* being used and having an id() function for its
-* value type, but the id() function returns the
+* This test is meant to fail due to the registry being used and having
+* an id() function for its value type, but the id() function returns the
 * wrong type.
 */
 
@@ -26,5 +25,5 @@ struct thing {
 
 
 int main(){
-  using reg = registry_via_id<char, thing>;
+  registry_via_id<char, thing>::put(thing{});
 }

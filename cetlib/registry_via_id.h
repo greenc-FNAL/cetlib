@@ -30,24 +30,17 @@ namespace cet {
     //the same type as K. 
     template<class K, class V>
     concept has_id = requires(V val){
-      val.id();
-      requires std::same_as<decltype(val.id()), K>;
+      {val.id()} -> std::same_as<K>;
     };
 #endif
   }
   template <class K, class V>
-  #if CET_CONCEPTS_AVAILABLE
-  requires detail::has_id<K, V>
-#endif
   class registry_via_id;  
 }
 
 // ======================================================================
 
 template <class K, class V>
-#if CET_CONCEPTS_AVAILABLE
-  requires cet::detail::has_id<K, V>
-#endif
 class cet::registry_via_id {
   // non-instantiable (and non-copyable, just in case):
   registry_via_id() = delete;
@@ -97,29 +90,43 @@ public:
   }
 
   // mutators:
-  // A single V;
-  #if CET_CONCEPTS_AVAILABLE
-  static K put(V const& value);
-  #else
+
+  //////////////////
+  // put()
+
+  // 1. A single value.
+#if CET_CONCEPTS_AVAILABLE
+  static K put(V const& value) requires cet::detail::has_id<K, V>;
+#else
   static typename detail::must_have_id<K, V>::type put(V const& value);
-  #endif
-  // A range of iterator to V.
+#endif
+
+  // 2. A range of values.
   template <class FwdIt>
   static std::enable_if_t<
     std::is_same_v<typename std::iterator_traits<FwdIt>::value_type,
                    mapped_type>>
   put(FwdIt begin, FwdIt end);
-  // A range of iterator to std::pair<K, V>. For each pair, first ==
-  // second.id() is a prerequisite.
+
+  // 3. A range of std::pair<K, V>. For each pair:
+  //
+  //      first == second.id()
+  //
+  //    is a prerequisite.
   template <class FwdIt>
   static std::enable_if_t<
     std::is_same_v<typename std::iterator_traits<FwdIt>::value_type,
                    value_type>>
   put(FwdIt begin, FwdIt end);
-  // A collection_type. For each value_type, first == second.id() is a
-  // prerequisite.
-  static void put(collection_type const& c);
 
+  // 4. A collection of std::pair<K, V>. For each pair:
+  //
+  //      first == second.id()
+  //
+  //    is a prerequisite.
+  static void put(collection_type const& c);
+  //////////////////
+  
   // accessors:
   static collection_type const&
   get() noexcept
@@ -140,27 +147,28 @@ private:
 
 }; // registry_via_id<>
 
-// ----------------------------------------------------------------------
-// put() overloads:
+//////////////////
+// put()
 
+// 1.
 template <class K, class V>
 #if CET_CONCEPTS_AVAILABLE
-requires cet::detail::has_id<K, V>
-  K
+K
 #else
 typename cet::detail::must_have_id<K, V>::type
 #endif
 cet::registry_via_id<K, V>::put(V const& value)
+#if CET_CONCEPTS_AVAILABLE
+requires cet::detail::has_id<K, V>
+#endif
 {
   K id = value.id();
   the_registry_().emplace(id, value);
   return id;
 }
 
+// 2.
 template <class K, class V>
-#if CET_CONCEPTS_AVAILABLE
-requires cet::detail::has_id<K, V>
-#endif
 template <class FwdIt>
 inline auto
 cet::registry_via_id<K, V>::put(FwdIt b, FwdIt e) -> std::enable_if_t<
@@ -170,10 +178,8 @@ cet::registry_via_id<K, V>::put(FwdIt b, FwdIt e) -> std::enable_if_t<
     put(*b);
 }
 
+// 3.
 template <class K, class V>
-#if CET_CONCEPTS_AVAILABLE
-requires cet::detail::has_id<K, V>
-#endif
 template <class FwdIt>
 inline auto
 cet::registry_via_id<K, V>::put(FwdIt b, FwdIt e) -> std::enable_if_t<
@@ -182,10 +188,8 @@ cet::registry_via_id<K, V>::put(FwdIt b, FwdIt e) -> std::enable_if_t<
   the_registry_().insert(b, e);
 }
 
+// 4.
 template <class K, class V>
-#if CET_CONCEPTS_AVAILABLE
-requires cet::detail::has_id<K, V>
-#endif
 inline void
 cet::registry_via_id<K, V>::put(collection_type const& c)
 {
@@ -196,9 +200,6 @@ cet::registry_via_id<K, V>::put(collection_type const& c)
 // get() overloads:
 
 template <class K, class V>
-#if CET_CONCEPTS_AVAILABLE
-requires cet::detail::has_id<K, V>
-#endif
 V const&
 cet::registry_via_id<K, V>::get(K const& key)
 {
@@ -210,9 +211,6 @@ cet::registry_via_id<K, V>::get(K const& key)
 }
 
 template <class K, class V>
-#if CET_CONCEPTS_AVAILABLE
-requires cet::detail::has_id<K, V>
-#endif
 bool
 cet::registry_via_id<K, V>::get(K const& key, V& value) noexcept
 {
