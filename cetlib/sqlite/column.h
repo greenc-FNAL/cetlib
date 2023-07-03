@@ -35,6 +35,11 @@
 #include <tuple>
 #include <utility>
 
+#include "cetlib_except/cxx20_macros.h"
+#if CET_CONCEPTS_AVAILABLE
+#include <concepts>
+#endif
+
 namespace cet::sqlite {
   template <size_t N>
   using name_array = std::array<std::string, N>;
@@ -62,120 +67,31 @@ namespace cet::sqlite {
   // IMPROVEMENT: The specializations can be improved by some
   // template metaprogramming and using the std::is_arithmetic and
   // std::is_floating_point type traits.
-  template <typename... Constraints>
-  struct column<double, Constraints...> : column_base {
+  template <typename T, typename... Constraints>
+  struct column : column_base {
     using column_base::column_base;
-    using type = double;
+    using type = T;
+
     std::string
     sqlite_type() const
+      requires std::integral<T>
+    {
+      return " integer";
+    }
+    std::string
+    sqlite_type() const
+      requires std::floating_point<T>
     {
       return " numeric";
     }
-  };
-
-  template <typename... Constraints>
-  struct column<float, Constraints...> : column_base {
-    using column_base::column_base;
-    using type = float;
     std::string
     sqlite_type() const
-    {
-      return " numeric";
-    }
-  };
-
-  template <typename... Constraints>
-  struct column<int, Constraints...> : column_base {
-    using column_base::column_base;
-    using type = int;
-    std::string
-    sqlite_type() const
-    {
-      return " integer";
-    }
-  };
-
-  template <typename... Constraints>
-  struct column<long, Constraints...> : column_base {
-    using column_base::column_base;
-    using type = long;
-    std::string
-    sqlite_type() const
-    {
-      return " integer";
-    }
-  };
-
-  template <typename... Constraints>
-  struct column<long long, Constraints...> : column_base {
-    using column_base::column_base;
-    using type = long long;
-    std::string
-    sqlite_type() const
-    {
-      return " integer";
-    }
-  };
-
-  template <typename... Constraints>
-  struct column<unsigned int, Constraints...> : column_base {
-    using column_base::column_base;
-    using type = int;
-    std::string
-    sqlite_type() const
-    {
-      return " integer";
-    }
-  };
-
-  template <typename... Constraints>
-  struct column<unsigned long, Constraints...> : column_base {
-    using column_base::column_base;
-    using type = long;
-    std::string
-    sqlite_type() const
-    {
-      return " integer";
-    }
-  };
-
-  template <typename... Constraints>
-  struct column<unsigned long long, Constraints...> : column_base {
-    using column_base::column_base;
-    using type = long long;
-    std::string
-    sqlite_type() const
-    {
-      return " integer";
-    }
-  };
-
-  template <typename... Constraints>
-  struct column<std::string, Constraints...> : column_base {
-    using column_base::column_base;
-    using type = std::string;
-    std::string
-    sqlite_type() const
+      requires(!std::is_arithmetic<T>::value &&
+               std::convertible_to<T, std::string>)
     {
       return " text";
     }
   };
-
-  //=============================================================================
-  // A permissive_column type is used in the context of an Ntuple so
-  // that the following constructs are allowed:
-  //
-  //   Ntuple<int, double, string>   // has identical semantics to...
-  //   Ntuple<column<int>, column<double>, column<string>>
-  //
-  // The benefit is that if a user wants to specify a constraint for
-  // a given column, the way to do that in the context of the Ntuple
-  // is for the user to specify (e.g.) column<int, primary_key> for
-  // the relevant column, but not be required to use column<...> for
-  // all others (e.g.):
-  //
-  //   Ntuple<column<int, primary_key>, double, string>;
-
   template <typename T, typename... Constraints>
   struct permissive_column : column<T, Constraints...> {
     using column<T, Constraints...>::column;
