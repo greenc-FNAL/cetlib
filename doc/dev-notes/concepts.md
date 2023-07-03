@@ -117,7 +117,7 @@
 * [ ] `sqlite/Ntuple.h`
 * [x] `sqlite/Transaction.h`
   * No use of templates.
-* [ ] `sqlite/column.h`
+* [x] `sqlite/column.h`
 * [ ] `sqlite/create_table.h`
 * [x] `sqlite/detail/DefaultDatabaseOpenPolicy.h`
   * No use of templates.
