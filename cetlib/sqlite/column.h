@@ -34,11 +34,7 @@
 #include <string>
 #include <tuple>
 #include <utility>
-
-#include "cetlib_except/cxx20_macros.h"
-#if CET_CONCEPTS_AVAILABLE
 #include <concepts>
-#endif
 
 namespace cet::sqlite {
   template <size_t N>
