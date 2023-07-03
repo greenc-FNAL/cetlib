@@ -36,6 +36,8 @@
 #include <utility>
 #include <concepts>
 
+using namespace std::string_literals;
+
 namespace cet::sqlite {
   template <size_t N>
   using name_array = std::array<std::string, N>;
@@ -72,20 +74,19 @@ namespace cet::sqlite {
     sqlite_type() const
       requires std::integral<T>
     {
-      return " integer";
+      return " integer"s;
     }
     std::string
     sqlite_type() const
       requires std::floating_point<T>
     {
-      return " numeric";
+      return " numeric"s;
     }
     std::string
     sqlite_type() const
-      requires(!std::is_arithmetic<T>::value &&
-               std::convertible_to<T, std::string>)
+      requires(std::same_as<T, std::string>)
     {
-      return " text";
+      return " text"s;
     }
   };
   template <typename T, typename... Constraints>
