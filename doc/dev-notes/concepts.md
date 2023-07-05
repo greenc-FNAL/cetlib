@@ -110,7 +110,7 @@
   * No use of templates.
 * [x] `split_path.h`
   * No use of templates.
-* [ ] `sqlite/Connection.h`
+* [x] `sqlite/Connection.h`
 * [ ] `sqlite/ConnectionFactory.h`
 * [x] `sqlite/Exception.h`
   * No use of templates.
