@@ -55,40 +55,34 @@ namespace cet::sqlite {
     std::string name_;
   };
 
+  namespace detail {
+    template <typename T>
+    concept known_sqlite_type =
+      std::is_arithmetic_v<T> ||
+      std::same_as<T, std::string>;
+  }
+
   // column<T> is a containing struct that knows its C++ type (T)
   // and the sqlite translation (sqlite_type()).  There is no
   // implementation for the general case; the template must be
   // specialized for each supported type.
   template <typename T, typename... Constraints>
+  requires detail::known_sqlite_type<T>
   struct column;
 
-  // IMPROVEMENT: The specializations can be improved by some
-  // template metaprogramming and using the std::is_arithmetic and
-  // std::is_floating_point type traits.
   template <typename T, typename... Constraints>
+  requires detail::known_sqlite_type<T>
   struct column : column_base {
     using column_base::column_base;
     using type = T;
 
-    std::string
-    sqlite_type() const
-      requires std::integral<T>
-    {
-      return " integer"s;
-    }
-    std::string
-    sqlite_type() const
-      requires std::floating_point<T>
-    {
-      return " numeric"s;
-    }
-    std::string
-    sqlite_type() const
-      requires(std::same_as<T, std::string>)
-    {
-      return " text"s;
-    }
+    static constexpr std::string
+    sqlite_type()
+      {
+        return std::integral<T> ? "integer"s : std::floating_point<T> ? " numeric"s : " text"s;
+      }
   };
+
   template <typename T, typename... Constraints>
   struct permissive_column : column<T, Constraints...> {
     using column<T, Constraints...>::column;
