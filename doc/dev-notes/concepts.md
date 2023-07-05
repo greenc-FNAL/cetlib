@@ -115,7 +115,8 @@
   * Concepts not necessary.
 * [x] `sqlite/Exception.h`
   * No use of templates.
-* [ ] `sqlite/Ntuple.h`
+* [x] `sqlite/Ntuple.h`
+  * Concepts not necessary.
 * [x] `sqlite/Transaction.h`
   * No use of templates.
 * [x] `sqlite/column.h`
@@ -126,18 +127,28 @@
 * [x] `sqlite/detail/bind_parameters.h`
 * [x] `sqlite/detail/column_constraint.h`
   * No use of templates.
-* [ ] `sqlite/detail/convert.h`
-* [ ] `sqlite/detail/extract.h`
-* [ ] `sqlite/detail/get_result.h`
+* [x] `sqlite/detail/convert.h`
+  * Concepts not necessary.
+* [x] `sqlite/detail/extract.h`
+  * Concepts not necessary.
+  * Redundant functional duplicate of `convert.h`?
+* [x] `sqlite/detail/get_result.h`
+  * Concepts not necessary as they would be satisified by construction
+    (`filldata` only ever gets called with an `std::tuple`).
 * [x] `sqlite/detail/normalize_statement.h`
   * No use of templates.
 * [x] `sqlite/exec.h`
   * No use of templates.
-* [ ] `sqlite/helpers.h`
-* [ ] `sqlite/insert.h`
-* [ ] `sqlite/query_result.h`
-* [ ] `sqlite/select.h`
-* [ ] `sqlite/statistics.h`
+* [x] `sqlite/helpers.h`
+  * Concepts not necessary.
+* [x] `sqlite/insert.h`
+  * Concepts not necessary.
+  * Minor drive-by improvement: `if` -> `if constexpr`.
+* [x] `sqlite/query_result.h`
+  * Concepts not necessary.
+* [x] `sqlite/select.h`
+* [x] `sqlite/statistics.h`
+  * Concepts not necessary.
 * [x] `trim.h`
   * No use of templates.
 * [x] `value_ptr.h`
