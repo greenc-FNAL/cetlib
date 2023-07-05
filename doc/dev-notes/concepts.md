@@ -111,7 +111,8 @@
 * [x] `split_path.h`
   * No use of templates.
 * [x] `sqlite/Connection.h`
-* [ ] `sqlite/ConnectionFactory.h`
+* [x] `sqlite/ConnectionFactory.h`
+  * Concepts not necessary.
 * [x] `sqlite/Exception.h`
   * No use of templates.
 * [ ] `sqlite/Ntuple.h`
