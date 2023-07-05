@@ -137,7 +137,8 @@ namespace cet::sqlite {
     std::string
     concatenate(H const& h, T const&... t)
     {
-      return (std::string{h} + ... + ("," + std::string{t}));
+      using namespace std::string_literals;
+      return (std::string{h} + ... + (","s + t));
     }
   }
 
