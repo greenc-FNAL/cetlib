@@ -30,6 +30,14 @@ main()
       bfs::path const p{f};
       assert(bfs::exists(p));
     }
+    // Check safe operation of an ephemeral connection
+    {
+      string const f{"ephemeral.db"};
+      create_table(*cf.make_connection(f),
+                   "onlyOne", column<int>{"numbers"});
+      bfs::path const p{f};
+      assert(bfs::exists(p));
+    }
     // Simple connection to in-memory database
     {
       unique_ptr<Connection> c{cf.make_connection(":memory:")};
