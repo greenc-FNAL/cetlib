@@ -79,7 +79,7 @@ namespace cet::sqlite {
     static constexpr std::string
     sqlite_type()
       {
-        return std::integral<T> ? "integer"s : std::floating_point<T> ? " numeric"s : " text"s;
+        return std::integral<T> ? " integer"s : std::floating_point<T> ? " numeric"s : " text"s;
       }
   };
 
