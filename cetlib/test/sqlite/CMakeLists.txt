@@ -18,3 +18,6 @@ cet_test(transaction_t SCOPED
   LIBRARIES PRIVATE cetlib::sqlite cetlib::cetlib
   TEST_PROPERTIES
   PASS_REGULAR_EXPRESSION "Transaction d'tor called before commit was called.")
+cet_test(bad_col_t COMPILE_ONLY)
+set_property(TEST bad_col_t PROPERTY
+  PASS_REGULAR_EXPRESSION "template constraint failure.*known_sqlite_type<T>")

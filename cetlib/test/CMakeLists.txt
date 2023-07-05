@@ -244,7 +244,3 @@ else()
   set_tests_properties(bad_reg_via_id_t bad_reg_via_id_t_2
     PROPERTIES WILL_FAIL TRUE)
 endif()
-
-cet_test(bad_col_t COMPILE_ONLY)
-set_property(TEST bad_col_t PROPERTY
-  PASS_REGULAR_EXPRESSION "constraints not satisfied")
