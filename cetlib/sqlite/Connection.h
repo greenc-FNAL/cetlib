@@ -75,8 +75,7 @@ namespace cet::sqlite {
     std::shared_ptr<std::recursive_mutex> mutex_{nullptr};
   };
 
-  template <typename DatabaseOpenPolicy>
-  requires detail::valid_policy<DatabaseOpenPolicy>
+  template <detail::valid_policy DatabaseOpenPolicy>
   Connection::Connection(std::string const& filename,
                          std::shared_ptr<std::recursive_mutex> spmutex,
                          DatabaseOpenPolicy policy)

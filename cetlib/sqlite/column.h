@@ -62,16 +62,10 @@ namespace cet::sqlite {
       std::same_as<T, std::string>;
   }
 
-  // column<T> is a containing struct that knows its C++ type (T)
-  // and the sqlite translation (sqlite_type()).  There is no
-  // implementation for the general case; the template must be
-  // specialized for each supported type.
-  template <typename T, typename... Constraints>
-  requires detail::known_sqlite_type<T>
-  struct column;
-
-  template <typename T, typename... Constraints>
-  requires detail::known_sqlite_type<T>
+  // column<T> is a containing struct that knows its C++ type (T) and
+  // the sqlite translation (sqlite_type()). T must be a known SQLite
+  // type in order for column<T> to be well formed.
+  template <detail::known_sqlite_type T, typename... Constraints>
   struct column : column_base {
     using column_base::column_base;
     using type = T;
