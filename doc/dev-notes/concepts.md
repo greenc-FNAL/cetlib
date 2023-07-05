@@ -122,7 +122,7 @@
   * Concepts not necessary.
 * [x] `sqlite/detail/DefaultDatabaseOpenPolicy.h`
   * No use of templates.
-* [ ] `sqlite/detail/bind_parameters.h`
+* [x] `sqlite/detail/bind_parameters.h`
 * [x] `sqlite/detail/column_constraint.h`
   * No use of templates.
 * [ ] `sqlite/detail/convert.h`
