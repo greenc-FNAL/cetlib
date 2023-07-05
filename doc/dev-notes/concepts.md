@@ -118,7 +118,8 @@
 * [x] `sqlite/Transaction.h`
   * No use of templates.
 * [x] `sqlite/column.h`
-* [ ] `sqlite/create_table.h`
+* [x] `sqlite/create_table.h`
+  * Concepts not necessary.
 * [x] `sqlite/detail/DefaultDatabaseOpenPolicy.h`
   * No use of templates.
 * [ ] `sqlite/detail/bind_parameters.h`
