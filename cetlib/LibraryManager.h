@@ -5,13 +5,13 @@
 #include "cetlib/search_path.h"
 #include "cetlib/shlib_utils.h"
 
+#include <concepts>
 #include <cstring>
 #include <map>
 #include <set>
 #include <string>
 #include <utility>
 #include <vector>
-#include <concepts>
 
 namespace cet {
   class LibraryManager;
@@ -211,7 +211,8 @@ cet::LibraryManager::getSymbolByPath(std::string const& lib_loc,
 }
 
 template <cet::detail::valid_iter OutIter>
-size_t cet::LibraryManager::getLoadableLibraries(OutIter dest) const
+size_t
+cet::LibraryManager::getLoadableLibraries(OutIter dest) const
 {
   size_t count{};
   for (auto const& lib_loc : lib_loc_map_) {
@@ -261,7 +262,8 @@ cet::LibraryManager::getSymbolByPath(std::string const& lib_loc,
 }
 
 template <cet::detail::valid_iter OutIter>
-size_t cet::LibraryManager::getLoadedLibraries(OutIter dest) const
+size_t
+cet::LibraryManager::getLoadedLibraries(OutIter dest) const
 {
   size_t count{};
   for (auto const& lib_ptr : lib_ptr_map_) {
@@ -272,7 +274,8 @@ size_t cet::LibraryManager::getLoadedLibraries(OutIter dest) const
 }
 
 template <cet::detail::valid_iter OutIter>
-size_t cet::LibraryManager::getValidLibspecs(OutIter dest) const
+size_t
+cet::LibraryManager::getValidLibspecs(OutIter dest) const
 {
   size_t count{};
   for (auto const& spec_trans : spec_trans_map_) {

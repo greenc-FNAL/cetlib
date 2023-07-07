@@ -10,22 +10,24 @@
 
 #include "cetlib_except/exception.h"
 
+#include <concepts>
 #include <iterator>
 #include <map>
 #include <type_traits>
-#include <concepts>
 
 namespace cet {
   namespace detail {
-    //concept requiring that V have a method called id() and that it returns
-    //the same type as K. 
-    template<class K, class V>
-    concept has_id = requires(V val){
-      {val.id()} -> std::same_as<K>;
-    };
+    // concept requiring that V have a method called id() and that it returns
+    // the same type as K.
+    template <class K, class V>
+    concept has_id = requires(V val) {
+                       {
+                         val.id()
+                         } -> std::same_as<K>;
+                     };
   }
   template <class K, class V>
-  class registry_via_id;  
+  class registry_via_id;
 }
 
 // ======================================================================
@@ -85,7 +87,8 @@ public:
   // put()
 
   // 1. A single value.
-  static K put(V const& value) requires cet::detail::has_id<K, V>;
+  static K put(V const& value)
+    requires cet::detail::has_id<K, V>;
 
   // 2. A range of values.
   template <class FwdIt>
@@ -112,7 +115,7 @@ public:
   //    is a prerequisite.
   static void put(collection_type const& c);
   //////////////////
-  
+
   // accessors:
   static collection_type const&
   get() noexcept
@@ -140,7 +143,7 @@ private:
 template <class K, class V>
 K
 cet::registry_via_id<K, V>::put(V const& value)
-requires cet::detail::has_id<K, V>
+  requires cet::detail::has_id<K, V>
 {
   K id = value.id();
   the_registry_().emplace(id, value);

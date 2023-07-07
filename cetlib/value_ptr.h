@@ -84,14 +84,12 @@ namespace cet {
                                     has_clone<Element>::value);
 
     template <typename Element>
-    struct default_action
-      : public default_copy<Element> {
+    struct default_action : public default_copy<Element> {
       using default_copy<Element>::operator();
     };
 
     template <PolymorphicWithClone Element>
-    struct default_action<Element>
-      : public default_clone<Element> {
+    struct default_action<Element> : public default_clone<Element> {
       using default_clone<Element>::operator();
     };
 
@@ -212,8 +210,7 @@ public:
   template <class E2>
     requires is_compatible_v<E2> && (!_::WouldSlice<Element, Cloner, E2>)
   explicit value_ptr(E2* other) noexcept : p{other}
-  {
-  }
+  {}
 
   // copying c'tors:
   value_ptr(value_ptr const& other) : p{clone_from(other.p)} {}

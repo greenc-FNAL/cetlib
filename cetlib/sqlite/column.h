@@ -31,10 +31,10 @@
 #include "cetlib/sqlite/detail/column_constraint.h"
 
 #include <array>
+#include <concepts>
 #include <string>
 #include <tuple>
 #include <utility>
-#include <concepts>
 
 using namespace std::string_literals;
 
@@ -58,8 +58,7 @@ namespace cet::sqlite {
   namespace detail {
     template <typename T>
     concept known_sqlite_type =
-      std::is_arithmetic_v<T> ||
-      std::same_as<T, std::string>;
+      std::is_arithmetic_v<T> || std::same_as<T, std::string>;
   }
 
   // column<T> is a containing struct that knows its C++ type (T) and
@@ -72,9 +71,11 @@ namespace cet::sqlite {
 
     static constexpr std::string
     sqlite_type()
-      {
-        return std::integral<T> ? " integer"s : std::floating_point<T> ? " numeric"s : " text"s;
-      }
+    {
+      return std::integral<T>       ? " integer"s :
+             std::floating_point<T> ? " numeric"s :
+                                      " text"s;
+    }
   };
 
   template <typename T, typename... Constraints>

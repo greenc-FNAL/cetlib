@@ -6,10 +6,10 @@
 #include <cstring>
 
 namespace cet {
-// For use when only a C++ {dynamic,static,reinterpret}_cast is not
-// sufficient to the task. The only case of this known currently is
-// when using dlopen, dlsym, etc. and a void * must be cast to a
-// function pointer.
+  // For use when only a C++ {dynamic,static,reinterpret}_cast is not
+  // sufficient to the task. The only case of this known currently is
+  // when using dlopen, dlsym, etc. and a void * must be cast to a
+  // function pointer.
   template <detail::cet_pointer PTR_T>
   PTR_T hard_cast(void* src);
 

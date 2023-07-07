@@ -2,9 +2,10 @@
 
 using namespace cet::sqlite;
 
-struct no_good_type {
-};
+struct no_good_type {};
 
-int main(){
+int
+main()
+{
   using mycol = column<no_good_type>;
 }

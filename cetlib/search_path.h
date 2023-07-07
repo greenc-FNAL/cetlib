@@ -9,13 +9,13 @@
 
 #include "cetlib/container_algorithms.h"
 
+#include "cetlib/detail/cetlib_concepts.h"
+#include <concepts>
 #include <cstdlib>
 #include <new>
 #include <ostream>
 #include <string>
 #include <vector>
-#include "cetlib/detail/cetlib_concepts.h"
-#include <concepts>
 
 namespace cet {
   // A search_path is used to manage the use of a PATH-like
@@ -88,8 +88,8 @@ public:
   // written to 'dest', and the total number of matching paths is the
   // return value of the function.
   template <detail::valid_iter OutIter>
-  std::size_t
-    find_files(std::string const& filename_pattern, OutIter dest) const;
+  std::size_t find_files(std::string const& filename_pattern,
+                         OutIter dest) const;
 
   // Return the string format (colon-delimited) of the search path.
   std::string to_string() const;

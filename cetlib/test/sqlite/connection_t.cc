@@ -33,8 +33,7 @@ main()
     // Check safe operation of an ephemeral connection
     {
       string const f{"ephemeral.db"};
-      create_table(*cf.make_connection(f),
-                   "onlyOne", column<int>{"numbers"});
+      create_table(*cf.make_connection(f), "onlyOne", column<int>{"numbers"});
       bfs::path const p{f};
       assert(bfs::exists(p));
     }
