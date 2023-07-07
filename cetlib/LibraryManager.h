@@ -5,17 +5,13 @@
 #include "cetlib/search_path.h"
 #include "cetlib/shlib_utils.h"
 
-#include "cetlib_except/cxx20_macros.h"
 #include <cstring>
 #include <map>
 #include <set>
 #include <string>
 #include <utility>
 #include <vector>
-#if CET_CONCEPTS_AVAILABLE
-#include "cetlib/detail/cetlib_concepts.h"
 #include <concepts>
-#endif
 
 namespace cet {
   class LibraryManager;
@@ -96,27 +92,18 @@ public:
   // Get a list of loadable libraries (full paths). Returns the number
   // of entries.
   size_t getLoadableLibraries(std::vector<std::string>& list) const;
-  template <class OutIter>
-#if CET_CONCEPTS_AVAILABLE
-    requires(cet::detail::valid_iter<OutIter>)
-#endif
+  template <cet::detail::valid_iter OutIter>
   size_t getLoadableLibraries(OutIter dest) const;
 
   // Get a list of already-loaded libraries (full paths). Returns the
   // number of entries.
   size_t getLoadedLibraries(std::vector<std::string>& list) const;
-  template <class OutIter>
-#if CET_CONCEPTS_AVAILABLE
-    requires(cet::detail::valid_iter<OutIter>)
-#endif
+  template <cet::detail::valid_iter OutIter>
   size_t getLoadedLibraries(OutIter dest) const;
 
   // Get list of valid libspecs. Returns the number of entries.
   size_t getValidLibspecs(std::vector<std::string>& list) const;
-  template <class OutIter>
-#if CET_CONCEPTS_AVAILABLE
-    requires(cet::detail::valid_iter<OutIter>)
-#endif
+  template <cet::detail::valid_iter OutIter>
   size_t getValidLibspecs(OutIter dest) const;
 
   // Get pair of short and full libspecs corresponding to library full
@@ -223,10 +210,7 @@ cet::LibraryManager::getSymbolByPath(std::string const& lib_loc,
   hard_cast<T>(getSymbolByPath_(lib_loc, sym_name), sym);
 }
 
-template <class OutIter>
-#if CET_CONCEPTS_AVAILABLE
-  requires(cet::detail::valid_iter<OutIter>)
-#endif
+template <cet::detail::valid_iter OutIter>
 size_t cet::LibraryManager::getLoadableLibraries(OutIter dest) const
 {
   size_t count{};
@@ -276,10 +260,7 @@ cet::LibraryManager::getSymbolByPath(std::string const& lib_loc,
   hard_cast<T>(getSymbolByPath_(lib_loc, sym_name, false), sym);
 }
 
-template <class OutIter>
-#if CET_CONCEPTS_AVAILABLE
-  requires(cet::detail::valid_iter<OutIter>)
-#endif
+template <cet::detail::valid_iter OutIter>
 size_t cet::LibraryManager::getLoadedLibraries(OutIter dest) const
 {
   size_t count{};
@@ -290,10 +271,7 @@ size_t cet::LibraryManager::getLoadedLibraries(OutIter dest) const
   return count;
 }
 
-template <class OutIter>
-#if CET_CONCEPTS_AVAILABLE
-  requires(cet::detail::valid_iter<OutIter>)
-#endif
+template <cet::detail::valid_iter OutIter>
 size_t cet::LibraryManager::getValidLibspecs(OutIter dest) const
 {
   size_t count{};

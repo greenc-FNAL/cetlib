@@ -64,10 +64,7 @@
 #include <type_traits>
 #include <utility>
 
-#include "cetlib_except/cxx20_macros.h"
-#if CET_CONCEPTS_AVAILABLE
 #include <concepts>
-#endif
 
 namespace cet {
   template <class Element>
@@ -79,46 +76,29 @@ namespace cet {
     template <class T>
     struct has_clone;
 
-    template <typename Element
-#if !CET_CONCEPTS_AVAILABLE
-              ,
-              bool = std::is_polymorphic_v<Element>&& has_clone<Element>::value
-#endif
-              >
+    template <typename Element>
     struct default_action;
 
-#if CET_CONCEPTS_AVAILABLE
     template <typename Element>
     concept PolymorphicWithClone = (std::is_polymorphic_v<Element> &&
                                     has_clone<Element>::value);
-#endif
 
     template <typename Element>
     struct default_action
-#if !CET_CONCEPTS_AVAILABLE
-      <Element, false>
-#endif
       : public default_copy<Element> {
       using default_copy<Element>::operator();
     };
 
-#if CET_CONCEPTS_AVAILABLE
     template <PolymorphicWithClone Element>
     struct default_action<Element>
-#else
-    template <typename Element, bool>
-    struct default_action
-#endif
       : public default_clone<Element> {
       using default_clone<Element>::operator();
     };
 
-#if CET_CONCEPTS_AVAILABLE
     template <typename Element, typename Cloner, typename E2>
     concept WouldSlice = std::is_polymorphic_v<E2> &&
                          (!std::is_same_v<Element, E2>) &&
                          std::is_base_of_v<default_copy<Element>, Cloner>;
-#endif
 
   }
 
@@ -230,20 +210,9 @@ public:
   constexpr value_ptr(std::nullptr_t) noexcept : p{nullptr} {}
 
   template <class E2>
-#if CET_CONCEPTS_AVAILABLE
     requires is_compatible_v<E2> && (!_::WouldSlice<Element, Cloner, E2>)
-#endif
   explicit value_ptr(E2* other) noexcept : p{other}
   {
-#if !CET_CONCEPTS_AVAILABLE
-    static_assert(is_compatible_v<E2>,
-                  "value_ptr<>'s pointee type is incompatible!");
-    static_assert(
-      !(std::is_polymorphic_v<E2> &&
-        (!std::is_same_v<Element, E2>)&&std::is_base_of_v<default_copy<Element>,
-                                                          Cloner>),
-      "value_ptr<>'s pointee type would slice when copying!");
-#endif
   }
 
   // copying c'tors:

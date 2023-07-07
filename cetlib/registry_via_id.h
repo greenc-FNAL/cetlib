@@ -13,26 +13,16 @@
 #include <iterator>
 #include <map>
 #include <type_traits>
-
-#include "cetlib_except/cxx20_macros.h"
-#if CET_CONCEPTS_AVAILABLE
 #include <concepts>
-#endif
 
 namespace cet {
   namespace detail {
-    template <class K, class V, K (V::*)() const = &V::id>
-    struct must_have_id {
-      using type = K;
-    };
-#if CET_CONCEPTS_AVAILABLE
     //concept requiring that V have a method called id() and that it returns
     //the same type as K. 
     template<class K, class V>
     concept has_id = requires(V val){
       {val.id()} -> std::same_as<K>;
     };
-#endif
   }
   template <class K, class V>
   class registry_via_id;  
@@ -95,11 +85,7 @@ public:
   // put()
 
   // 1. A single value.
-#if CET_CONCEPTS_AVAILABLE
   static K put(V const& value) requires cet::detail::has_id<K, V>;
-#else
-  static typename detail::must_have_id<K, V>::type put(V const& value);
-#endif
 
   // 2. A range of values.
   template <class FwdIt>
@@ -152,15 +138,9 @@ private:
 
 // 1.
 template <class K, class V>
-#if CET_CONCEPTS_AVAILABLE
 K
-#else
-typename cet::detail::must_have_id<K, V>::type
-#endif
 cet::registry_via_id<K, V>::put(V const& value)
-#if CET_CONCEPTS_AVAILABLE
 requires cet::detail::has_id<K, V>
-#endif
 {
   K id = value.id();
   the_registry_().emplace(id, value);
