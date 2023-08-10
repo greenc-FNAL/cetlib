@@ -199,3 +199,48 @@ cet_make_exec(NAME hypot_test USE_CATCH2_MAIN NO_INSTALL)
 include(ParseAndAddCatchTests)
 set(AdditionalCatchParameters -s)
 ParseAndAddCatchTests(hypot_test)
+
+foreach(compile_test IN ITEMS
+    bad_hard_cast_t bad_copy_all_t bad_for_all_container_t bad_for_all_func_t bad_pow_t bad_search_path_t bad_lib_manager_t bad_bit_manipulation_t)
+  cet_test(${compile_test} COMPILE_ONLY TEST_PROPERTIES WILL_FAIL TRUE)
+endforeach()
+
+foreach(compile_test IN ITEMS
+    bad_value_ptr_t bad_value_ptr_t_2 bad_value_ptr_t_3)
+  cet_test(${compile_test} COMPILE_ONLY)
+endforeach()
+if (CMAKE_CXX_STANDARD GREATER_EQUAL 20)
+  set_property(TEST bad_value_ptr_t PROPERTY PASS_REGULAR_EXPRESSION
+    "is_compatible_v<E2>.*evaluated to ")
+  set_tests_properties(bad_value_ptr_t_2 bad_value_ptr_t_3
+    PROPERTIES PASS_REGULAR_EXPRESSION
+    "!\\(WouldSlice<Element, Cloner, E2>\\).*evaluated to ")
+else()
+  set_tests_properties(bad_value_ptr_t bad_value_ptr_t_2 bad_value_ptr_t_3
+    PROPERTIES WILL_FAIL TRUE)
+endif()
+
+cet_test(bad_hypot_t COMPILE_ONLY)
+if (CMAKE_CXX_STANDARD GREATER_EQUAL 20)
+  set_property(TEST bad_hypot_t PROPERTY PASS_REGULAR_EXPRESSION
+    "is_arithmetic<T>.*evaluated to ")
+else()
+  set_tests_properties(bad_hypot_t
+    PROPERTIES WILL_FAIL TRUE)
+endif()
+
+foreach (compile_test IN ITEMS
+    bad_reg_via_id_t bad_reg_via_id_t_2)
+  cet_test(${compile_test} COMPILE_ONLY)
+endforeach()
+if (CMAKE_CXX_STANDARD GREATER_EQUAL 20)
+  set_property(TARGET bad_reg_via_id_t bad_reg_via_id_t_2 APPEND PROPERTY
+    COMPILE_OPTIONS "$<$<COMPILE_LANGUAGE:CXX>:-fconcepts-diagnostics-depth=2>")
+  set_property(TEST bad_reg_via_id_t PROPERTY
+    PASS_REGULAR_EXPRESSION "error: .*struct thing.* has no member named .*id.*")
+  set_property(TEST bad_reg_via_id_t_2 PROPERTY
+    PASS_REGULAR_EXPRESSION "note: the expression .*is_same_v<_Tp, _Up> \\[with _Tp = float; _Up = char\\].* evaluated to .*false.*")
+else()
+  set_tests_properties(bad_reg_via_id_t bad_reg_via_id_t_2
+    PROPERTIES WILL_FAIL TRUE)
+endif()
