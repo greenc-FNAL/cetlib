@@ -32,10 +32,10 @@
 #include "cetlib/sqlite/Connection.h"
 #include "cetlib/sqlite/detail/DefaultDatabaseOpenPolicy.h"
 
-#include <unordered_map>
 #include <memory>
 #include <mutex>
 #include <string>
+#include <unordered_map>
 #include <utility>
 
 namespace cet::sqlite {
@@ -48,14 +48,16 @@ namespace cet::sqlite {
       -> std::unique_ptr<Connection>;
 
   private:
-    std::unordered_map<std::string, std::weak_ptr<std::recursive_mutex>> databaseLocks_;
+    std::unordered_map<std::string, std::weak_ptr<std::recursive_mutex>>
+      databaseLocks_;
     std::recursive_mutex mutex_;
   };
 
   template <typename DatabaseOpenPolicy, typename... PolicyArgs>
   auto
   ConnectionFactory::make_connection(std::string const& filename,
-                                     PolicyArgs&&... policyArgs) -> std::unique_ptr<Connection>
+                                     PolicyArgs&&... policyArgs)
+    -> std::unique_ptr<Connection>
   {
     // Implementation a la Herb Sutter's favorite 10-liner
     std::lock_guard sentry{mutex_};
@@ -72,7 +74,8 @@ namespace cet::sqlite {
     // constructor for Connection we need to call is private, and make_unique
     //  is not a friend... and the syntax for making the right function template
     //  be a friend is non-obvious.
-    Connection* pc =  new Connection(filename,
+    Connection* pc = new Connection(
+      filename,
       shared_ptr_to_mutex,
       DatabaseOpenPolicy{std::forward<PolicyArgs>(policyArgs)...});
     return std::unique_ptr<Connection>(pc);
