@@ -7,13 +7,14 @@
 
 #include "cetlib/split_path.h"
 
-#include "boost/algorithm/string.hpp"
+#include "cetlib/split_search_path.h"
 
 void
 cet::split_path(std::string const& path, std::vector<std::string>& components)
 {
-  if (path.empty())
+  if (path.empty()) {
     components.clear();
-  else
-    boost::algorithm::split(components, path, boost::algorithm::is_any_of(":"));
+  } else {
+    split_search_path(path, components, tags::append);
+  }
 }

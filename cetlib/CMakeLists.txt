@@ -56,6 +56,7 @@ cet_make_library(HEADERS_TARGET
     search_path.cc
     sha1.cc
     simple_stats.cc
+    split_search_path.cc
     split_path.cc
     split_by_regex.cc
   LIBRARIES

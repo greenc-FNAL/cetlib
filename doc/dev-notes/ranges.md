@@ -7,7 +7,12 @@
 * [x] split.h
 * [x] split\_path.h
     * Ranges not necessary.
-* [ ] split\_path.cc
+* [x] split\_path.cc
+    * Deprecated due to ambiguous name and non-intuitive implementation.
+    * Re-implemented in terms of `split\_search_path()`.
+* [x] split\_search\_path.cc
+    * Re-work `split\_path()` as an overload set with unambiguous
+      semantics.
 * [x] loadable\_libraries.h
     * Ranges not necessary.
 * [x] filepath\_maker.h
