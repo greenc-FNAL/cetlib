@@ -42,7 +42,7 @@ foreach (test IN ITEMS
     trim_test
     value_ptr_test
 )
-  cet_test(${test} USE_BOOST_UNIT LIBRARIES PRIVATE cetlib::cetlib)
+  cet_test(${test} USE_BOOST_UNIT)
 endforeach()
 
 # Other tests.
@@ -63,8 +63,7 @@ endforeach()
 
 cet_test(cpu_timer_test USE_BOOST_UNIT
   TEST_PROPERTIES RUN_SERIAL true
-  OPTIONAL_GROUPS LOAD_SENSITIVE
-  LIBRARIES PRIVATE cetlib::cetlib)
+  OPTIONAL_GROUPS LOAD_SENSITIVE)
 cet_test(filepath_maker_test USE_BOOST_UNIT
   TEST_PROPERTIES
   ENVIRONMENT "CURRENT_DIR=${CMAKE_CURRENT_SOURCE_DIR};\
@@ -87,13 +86,18 @@ foreach (target IN ITEMS
     base_converter_test
     canonical_string_test
     column_width_test
+    container_algs_test
+    cpu_timer_test
+    exempt_ptr_test
     filesystem_test
     include_test
     includer_test
     is_absolute_filepath_t
     lpad_test
     map_vector_test
+    maybe_ref_test
     nybbler_test
+    ostream_handle_test
     pow_constexpr_test
     pow_test
     registry_test
@@ -109,8 +113,10 @@ foreach (target IN ITEMS
     simple_stats_t
     split_by_regex_test
     split_path_test
-)
- target_link_libraries(${target} PRIVATE cetlib::cetlib)
+    split_test
+    trim_test
+    value_ptr_test)
+  target_link_libraries(${target} PRIVATE cetlib::cetlib)
 endforeach()
 
 ####################################
@@ -122,7 +128,8 @@ cet_make_library(LIBRARY_NAME cetlib_test_TestPluginBase SOURCE TestPluginBase.c
   LIBRARIES PRIVATE art_plugin_support::support_macros)
 
 include(BasicPlugin)
-basic_plugin(TestPlugin "plugin" NO_INSTALL LIBRARIES PRIVATE cetlib_test::TestPluginBase)
+basic_plugin(TestPlugin "plugin" NO_INSTALL
+  LIBRARIES PRIVATE cetlib_test::TestPluginBase)
 
 # Use default Plugin lookup
 cet_test(PluginFactory_t USE_BOOST_UNIT
@@ -132,7 +139,8 @@ cet_test(PluginFactory_t USE_BOOST_UNIT
 cet_test(PluginFactoryCustomSearchPath_t USE_BOOST_UNIT
   SOURCE PluginFactory_t.cc
   LIBRARIES PRIVATE cetlib_test::TestPluginBase cetlib::cetlib
-  TEST_PROPERTIES ENVIRONMENT PLUGIN_FACTORY_SEARCH_PATH=$<TARGET_FILE_DIR:cetlib_test::TestPlugin_plugin>)
+  TEST_PROPERTIES ENVIRONMENT
+  PLUGIN_FACTORY_SEARCH_PATH=$<TARGET_FILE_DIR:cetlib_test::TestPlugin_plugin>)
 target_compile_definitions(PluginFactoryCustomSearchPath_t PRIVATE PLUGIN_FACTORY_SEARCH_PATH=1)
 
 function(test_library LIBSPEC)
@@ -171,7 +179,8 @@ cet_test(LibraryManagerCustomSearchPath_t USE_BOOST_UNIT
       ${CMAKE_DL_LIBS}
   TEST_PROPERTIES ENVIRONMENT LIBRARY_MANAGER_SEARCH_PATH=$<TARGET_FILE_DIR:1_1_1_cetlibtest>
 )
-target_compile_definitions(LibraryManagerCustomSearchPath_t PRIVATE LIBRARY_MANAGER_SEARCH_PATH=1)
+target_compile_definitions(LibraryManagerCustomSearchPath_t
+  PRIVATE LIBRARY_MANAGER_SEARCH_PATH=1)
 
 cet_test(replace_all_test USE_BOOST_UNIT LIBRARIES PRIVATE cetlib::cetlib)
 cet_test(regex_t USE_BOOST_UNIT LIBRARIES PRIVATE cetlib::cetlib
