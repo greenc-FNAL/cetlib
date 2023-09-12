@@ -60,34 +60,3 @@ TEST_CASE("test_typical_use")
 
   CHECK(split_search_path(path) == path_elements);
 }
-
-TEST_CASE("test_empty_append")
-{
-  results_type const ref = {"preexisting junk"s};
-  results_type results = ref;
-  REQUIRE_NOTHROW(split_search_path(""s, results, tags::append));
-  CHECK(results == ref);
-}
-
-TEST_CASE("test_empty_clear")
-{
-  results_type results = {"preexisting junk"s};
-  REQUIRE_NOTHROW(split_search_path(""s, results));
-  CHECK(results.empty());
-}
-
-TEST_CASE("test_append")
-{
-  results_type const ref = {"preexisting junk"s, "A"s, ""s};
-  results_type results = {ref[0]};
-  REQUIRE_NOTHROW(split_search_path("A:"s, results, tags::append));
-  CHECK(results == ref);
-}
-
-TEST_CASE("test_clear")
-{
-  results_type const ref = {"A"s, ""s};
-  results_type results = {"preexisting junk"};
-  REQUIRE_NOTHROW(split_search_path("A:"s, results));
-  CHECK(results == ref);
-}

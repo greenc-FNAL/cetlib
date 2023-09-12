@@ -9,12 +9,15 @@
 
 #include "cetlib/split_search_path.h"
 
+#include <algorithm>
+
 void
 cet::split_path(std::string const& path, std::vector<std::string>& components)
 {
   if (path.empty()) {
     components.clear();
   } else {
-    split_search_path(path, components, tags::append);
+    auto results = split_search_path(path);
+    std::move(results.begin(), results.end(), components.end());
   }
 }

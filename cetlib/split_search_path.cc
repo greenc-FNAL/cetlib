@@ -6,6 +6,8 @@ std::vector<std::string>
 cet::split_search_path(std::string const& search_path)
 {
   std::vector<std::string> results;
-  split_search_path(search_path, results, tags::append);
+  for (auto&& item : search_path | std::views::split(':')) {
+    results.emplace_back(item.begin(), item.end());
+  }
   return results;
 }
