@@ -53,10 +53,18 @@ TEST_CASE("test_typical_use")
                                       "/p/cmake/v2_6_4/."s,
                                       "/p/cppunit/v1_12_1/slf5.x86_64.a1/lib"s};
 
+#if __cpp_lib_ranges_join_with >= 202202L &&                                   \
+  __cpp_lib_ranges_to_container >= 202202L
+  // * Satisfied by LLVM/Clang >=17.
+  // * *NOT* satisfied by GCC <=13.
+  auto const path = std::ranges::to<std::string>(
+    path_elements | std::ranges::views::join_with(":"s));
+#else
   string path = path_elements[0];
   for (auto const& pe : path_elements | std::views::drop(1)) {
     path += ":"s + pe;
   }
+#endif
 
   CHECK(split_search_path(path) == path_elements);
 }

@@ -120,6 +120,11 @@ foreach (target IN ITEMS
   target_link_libraries(${target} PRIVATE cetlib::cetlib)
 endforeach()
 
+# Take advantage of C++23 for split_search_path_t if we can.
+if (cxx_std_23 IN_LIST CMAKE_CXX_COMPILE_FEATURES)
+  target_compile_features(split_search_path_t PRIVATE cxx_std_23)
+endif()
+
 ####################################
 # Test plugin machinery.
 cet_test(plugin_search_path_t USE_CATCH2_MAIN LIBRARIES PRIVATE cetlib::cetlib)
