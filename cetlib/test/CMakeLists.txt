@@ -78,7 +78,8 @@ cet_test(search_path_test_2.sh PREBUILT DEPENDENCIES search_path_test_2)
 
 cet_test(sha1_test_2 SOURCE sha1_test_2.cc sha1.cpp)
 cet_test(sha1_test_performance SOURCE sha1_test_performance.cc sha1.cpp)
-cet_test(split_path_test)
+
+cet_test(split_search_path_t USE_CATCH2_MAIN)
 
 # Add cetlib::cetlib as a dependency where necessary.
 foreach (target IN ITEMS
@@ -112,12 +113,17 @@ foreach (target IN ITEMS
     shlib_utils_t
     simple_stats_t
     split_by_regex_test
-    split_path_test
+    split_search_path_t
     split_test
     trim_test
     value_ptr_test)
   target_link_libraries(${target} PRIVATE cetlib::cetlib)
 endforeach()
+
+# Take advantage of C++23 for split_search_path_t if we can.
+if (cxx_std_23 IN_LIST CMAKE_CXX_COMPILE_FEATURES)
+  target_compile_features(split_search_path_t PRIVATE cxx_std_23)
+endif()
 
 ####################################
 # Test plugin machinery.
