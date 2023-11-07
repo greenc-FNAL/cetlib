@@ -1,6 +1,5 @@
 include(CetTest)
 cet_enable_asserts()
-cet_test_env("LC_ALL=en_US.utf8")
 
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 
@@ -8,6 +7,11 @@ find_package(Catch2 REQUIRED)
 
 # Put everything in a different export set.
 cet_register_export_set(SET_NAME Testing NAMESPACE cetlib_test SET_DEFAULT)
+
+# Quote alternatives under different locales (used for regular expression testing)
+set(open_quote "('|‘)")
+set(close_quote "('|’)")
+
 
 add_subdirectory(sqlite)
 
@@ -256,11 +260,12 @@ foreach (compile_test IN ITEMS
     bad_reg_via_id_t bad_reg_via_id_t_2)
   cet_test(${compile_test} COMPILE_ONLY LIBRARIES PRIVATE cetlib::headers cetlib_except::cetlib_except)
 endforeach()
+
 if (CMAKE_CXX_STANDARD GREATER_EQUAL 20)
   set_property(TEST bad_reg_via_id_t PROPERTY
-    PASS_REGULAR_EXPRESSION "note: the required expression ‘val\\.id\\(\\)’ is invalid")
+    PASS_REGULAR_EXPRESSION "note: the required expression ${open_quote}val\\.id\\(\\)${close_quote} is invalid")
   set_property(TEST bad_reg_via_id_t_2 PROPERTY
-    PASS_REGULAR_EXPRESSION "note: ‘val\\.id\\(\\)’ does not satisfy return-type-requirement")
+    PASS_REGULAR_EXPRESSION "note: ${open_quote}val\\.id\\(\\)${close_quote} does not satisfy return-type-requirement")
 else()
   set_tests_properties(bad_reg_via_id_t bad_reg_via_id_t_2
     PROPERTIES WILL_FAIL TRUE)
