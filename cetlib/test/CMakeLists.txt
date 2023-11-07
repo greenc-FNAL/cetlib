@@ -5,9 +5,6 @@ cet_test_env("LC_ALL=en_US.utf8")
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 
 find_package(Catch2 REQUIRED)
-find_package(SQLite3 REQUIRED)
-find_package(Threads REQUIRED)
-find_package(hep_concurrency REQUIRED)
 
 # Put everything in a different export set.
 cet_register_export_set(SET_NAME Testing NAMESPACE cetlib_test SET_DEFAULT)
