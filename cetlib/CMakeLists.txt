@@ -9,7 +9,6 @@ include(CetMake)
 find_package(Boost COMPONENTS regex REQUIRED)
 find_package(Boost COMPONENTS program_options filesystem REQUIRED EXPORT)
 find_package(cetlib_except REQUIRED EXPORT)
-find_package(SQLite3 REQUIRED EXPORT)
 
 ####################################
 # Libraries.
@@ -111,7 +110,10 @@ install_headers(SUBDIRS detail)
 install_source(SUBDIRS detail)
 
 # SQLite functionality.
-add_subdirectory(sqlite)
+if (cetlib_SQLITE)
+  find_package(SQLite3 REQUIRED EXPORT)
+  add_subdirectory(sqlite)
+endif()
 
 # Tests
 if (BUILD_TESTING)

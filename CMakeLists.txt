@@ -12,6 +12,9 @@ cet_set_compiler_flags(DIAGS VIGILANT DWARF_VER 4
   EXTRA_FLAGS -pedantic
 )
 
+project_variable(SQLITE CONFIG PUBLIC TYPE BOOL
+  DOCSTRING "SQLite3 utilities and Ntuple facilities" ON)
+
 if(DEFINED ENV{CET_SANITIZE_ADDRESS} AND DEFINED ENV{GCC_FQ_DIR})
   find_file(ASAN_LIB libasan.so NO_DEFAULT_PATH PATHS $ENV{GCC_FQ_DIR}/lib64)
   cet_add_compiler_flags(CXX -fsanitize=address)

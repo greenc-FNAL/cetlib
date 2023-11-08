@@ -9,7 +9,9 @@ find_package(Catch2 REQUIRED)
 # Put everything in a different export set.
 cet_register_export_set(SET_NAME Testing NAMESPACE cetlib_test SET_DEFAULT)
 
-add_subdirectory(sqlite)
+if (cetlib_SQLITE)
+  add_subdirectory(sqlite)
+endif()
 
 cet_test(bit_test)
 cet_test(value_ptr_test_2)
