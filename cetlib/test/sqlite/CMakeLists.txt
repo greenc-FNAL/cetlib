@@ -21,11 +21,14 @@ cet_test(transaction_t SCOPED
   LIBRARIES PRIVATE cetlib::sqlite cetlib::cetlib
   TEST_PROPERTIES
   PASS_REGULAR_EXPRESSION "Transaction d'tor called before commit was called.")
-cet_test(bad_col_t COMPILE_ONLY TEST_PROPERTIES
+cet_test(bad_col_t COMPILE_ONLY LIBRARIES PRIVATE cetlib::headers
+  TEST_PROPERTIES
   PASS_REGULAR_EXPRESSION "template constraint failure.*known_sqlite_type<T>")
-cet_test(bad_bind_parameter_t COMPILE_ONLY TEST_PROPERTIES
+cet_test(bad_bind_parameter_t COMPILE_ONLY
+  LIBRARIES PRIVATE cetlib::headers
+  TEST_PROPERTIES
   PASS_REGULAR_EXPRESSION " note: the required expression ‘get<\\(N - 1\\)>\\(t\\)’ is invalid")
 cet_test(bad_select_t COMPILE_ONLY
-  LIBRARIES PRIVATE cetlib_except::cetlib_except
+  LIBRARIES PRIVATE cetlib::headers cetlib_except::cetlib_except
   TEST_PROPERTIES
   PASS_REGULAR_EXPRESSION " note: the expression ‘\\(\\.\\.\\. && stringish<T>\\) \\[with T = \\{not_stringish\\}\\]’ evaluated to ‘false’")

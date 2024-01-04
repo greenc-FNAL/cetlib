@@ -213,12 +213,12 @@ ParseAndAddCatchTests(hypot_test)
 
 foreach(compile_test IN ITEMS
     bad_hard_cast_t bad_copy_all_t bad_for_all_container_t bad_for_all_func_t bad_pow_t bad_search_path_t bad_lib_manager_t bad_bit_manipulation_t)
-  cet_test(${compile_test} COMPILE_ONLY TEST_PROPERTIES WILL_FAIL TRUE)
+  cet_test(${compile_test} COMPILE_ONLY TEST_PROPERTIES WILL_FAIL TRUE LIBRARIES PRIVATE cetlib::headers)
 endforeach()
 
 foreach(compile_test IN ITEMS
     bad_value_ptr_t bad_value_ptr_t_2 bad_value_ptr_t_3)
-  cet_test(${compile_test} COMPILE_ONLY)
+  cet_test(${compile_test} COMPILE_ONLY LIBRARIES PRIVATE cetlib::headers)
 endforeach()
 if (CMAKE_CXX_STANDARD GREATER_EQUAL 20)
   set_property(TEST bad_value_ptr_t PROPERTY PASS_REGULAR_EXPRESSION
@@ -231,7 +231,7 @@ else()
     PROPERTIES WILL_FAIL TRUE)
 endif()
 
-cet_test(bad_hypot_t COMPILE_ONLY)
+cet_test(bad_hypot_t COMPILE_ONLY LIBRARIES PRIVATE cetlib::headers)
 if (CMAKE_CXX_STANDARD GREATER_EQUAL 20)
   set_property(TEST bad_hypot_t PROPERTY PASS_REGULAR_EXPRESSION
     "is_arithmetic<T>.*evaluated to ")
@@ -242,15 +242,13 @@ endif()
 
 foreach (compile_test IN ITEMS
     bad_reg_via_id_t bad_reg_via_id_t_2)
-  cet_test(${compile_test} COMPILE_ONLY LIBRARIES PRIVATE cetlib_except::cetlib_except)
+  cet_test(${compile_test} COMPILE_ONLY LIBRARIES PRIVATE cetlib::headers cetlib_except::cetlib_except)
 endforeach()
 if (CMAKE_CXX_STANDARD GREATER_EQUAL 20)
-  set_property(TARGET bad_reg_via_id_t bad_reg_via_id_t_2 APPEND PROPERTY
-    COMPILE_OPTIONS "$<$<COMPILE_LANGUAGE:CXX>:-fconcepts-diagnostics-depth=2>")
   set_property(TEST bad_reg_via_id_t PROPERTY
-    PASS_REGULAR_EXPRESSION "error: ‘struct thing’ has no member named ‘id’")
+    PASS_REGULAR_EXPRESSION "note: the required expression ‘val\\.id\\(\\)’ is invalid")
   set_property(TEST bad_reg_via_id_t_2 PROPERTY
-    PASS_REGULAR_EXPRESSION "note: the expression ‘is_same_v<_Tp, _Up> \\[with _Tp = float; _Up = char\\]’ evaluated to ‘false’")
+    PASS_REGULAR_EXPRESSION "note: ‘val\\.id\\(\\)’ does not satisfy return-type-requirement")
 else()
   set_tests_properties(bad_reg_via_id_t bad_reg_via_id_t_2
     PROPERTIES WILL_FAIL TRUE)
