@@ -7,13 +7,13 @@
 // =====================================================================
 #include "cetlib/includer.h"
 
-#include <filesystem>
 #include "cetlib/filepath_maker.h"
 #include "cetlib/split_by_regex.h"
 #include "cetlib/trim.h"
 #include "cetlib_except/coded_exception.h"
 
 #include <algorithm>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 

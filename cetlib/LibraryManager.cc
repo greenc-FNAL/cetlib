@@ -1,7 +1,5 @@
 #include "cetlib/LibraryManager.h"
 
-#include <filesystem>
-#include <regex>
 #include "cetlib/container_algorithms.h"
 #include "cetlib/detail/plugin_search_path.h"
 #include "cetlib/plugin_libpath.h"
@@ -15,7 +13,9 @@ extern "C" {
 }
 
 #include <algorithm>
+#include <filesystem>
 #include <iterator>
+#include <regex>
 #include <sstream>
 #include <vector>
 
@@ -166,8 +166,7 @@ cet::LibraryManager::spec_trans_map_inserter(
   lib_loc_map_t::value_type const& entry)
 {
   // First obtain short spec.
-  std::string const e_str =
-    "([^_]+)_" + lib_type_ + dllExtPattern() + '$';
+  std::string const e_str = "([^_]+)_" + lib_type_ + dllExtPattern() + '$';
   std::regex const e{e_str};
   std::match_results<std::string::const_iterator> match_results;
   if (std::regex_search(entry.first, match_results, e)) {
@@ -181,11 +180,10 @@ cet::LibraryManager::spec_trans_map_inserter(
   std::ostringstream lib_name;
   std::ostream_iterator<char, char> oi{lib_name};
   std::regex_replace(oi,
-                       entry.first.begin(),
-                       entry.first.end(),
-                       std::regex{"_+"},
-                       std::string{"/"}
-                       );
+                     entry.first.begin(),
+                     entry.first.end(),
+                     std::regex{"_+"},
+                     std::string{"/"});
   std::regex const stripper{"^lib(.*)/" + lib_type_ + "\\..*$"};
   std::string const lib_name_str{lib_name.str()};
   if (std::regex_search(lib_name_str, match_results, stripper)) {

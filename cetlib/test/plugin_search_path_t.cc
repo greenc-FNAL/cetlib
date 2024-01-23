@@ -56,7 +56,8 @@ TEST_CASE("Tests")
 {
   // Setup.
   unsetenv(plugin_libpath());
-  string const libpath_before { "/dev/null/libpath1:/dev/null/libpath2:/dev/null/libpath3" };
+  string const libpath_before{
+    "/dev/null/libpath1:/dev/null/libpath2:/dev/null/libpath3"};
   setenv(os_libpath(), libpath_before.c_str(), 1);
 
   ////////////////////////////////////

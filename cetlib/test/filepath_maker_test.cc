@@ -7,12 +7,12 @@
 #define BOOST_TEST_MODULE (filepath_maker test)
 #include "boost/test/unit_test.hpp"
 
-#include <filesystem>
 #include "cetlib/filepath_maker.h"
 #include "cetlib/filesystem.h"
 #include "cetlib/getenv.h"
 #include "cetlib_except/exception.h"
 
+#include <filesystem>
 #include <string>
 
 namespace fs = std::filesystem;
