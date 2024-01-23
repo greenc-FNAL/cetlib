@@ -20,8 +20,6 @@ extern "C" {
 #include <vector>
 
 namespace {
-  std::string const default_pattern_stem{"(?:[A-Za-z0-9\\-]*_)*[A-Za-z0-9]+_"};
-
   inline std::string
   maybe_trim_shlib_prefix(std::string const& spec)
   {
@@ -31,11 +29,17 @@ namespace {
   }
 }
 
+std::string
+cet::LibraryManager::defaultPatternStem()
+{
+  return "(?:[A-Za-z0-9\\-]*_)*[A-Za-z0-9]+_";
+}
+
 cet::LibraryManager::LibraryManager(search_path search_path,
                                     std::string lib_type)
   : LibraryManager{std::move(search_path),
                    std::move(lib_type),
-                   default_pattern_stem}
+                   defaultPatternStem()}
 {}
 
 cet::LibraryManager::LibraryManager(search_path search_path,
@@ -68,7 +72,7 @@ cet::LibraryManager::LibraryManager(search_path search_path,
 }
 
 cet::LibraryManager::LibraryManager(std::string lib_type)
-  : LibraryManager{std::move(lib_type), default_pattern_stem}
+  : LibraryManager{std::move(lib_type), defaultPatternStem()}
 {}
 
 cet::LibraryManager::LibraryManager(std::string lib_type, std::string pattern)

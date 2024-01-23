@@ -196,11 +196,8 @@ target_compile_definitions(LibraryManagerCustomSearchPath_t
 
 cet_test(replace_all_test USE_BOOST_UNIT LIBRARIES PRIVATE cetlib::cetlib)
 
-# We define an empty LD_LIBRARY_PATH env. variable to prevent an
-# exception throw from the LibraryManager
 cet_test(regex_t USE_BOOST_UNIT LIBRARIES PRIVATE cetlib::cetlib
-  TEST_WORKDIR ${CMAKE_CURRENT_SOURCE_DIR}
-  TEST_PROPERTIES ENVIRONMENT_MODIFICATION LD_LIBRARY_PATH=path_list_prepend:)
+  TEST_WORKDIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 cet_test(regex_standalone_t SOURCE regex_t.cc
   TEST_WORKDIR ${CMAKE_CURRENT_SOURCE_DIR})

@@ -36,6 +36,12 @@ public:
   explicit LibraryManager(std::string lib_type);
   explicit LibraryManager(std::string lib_type, std::string pattern);
 
+  // For the string above ('libaa_bb_cc_xyz_<lib_type>.<ext>'), the
+  // pattern stem is the substring 'aa_bb_cc_xyz_'.  The default
+  // pattern stem is thus the regular expression pattern that supports
+  // such a form.
+  static std::string defaultPatternStem();
+
   // The d'tor does NOT unload libraries, because that is dangerous to
   // do in C++. Use the compiler-generated default destructor.
   ~LibraryManager();
